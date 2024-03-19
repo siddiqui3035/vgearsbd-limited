@@ -97,13 +97,16 @@
             <div class="row align-items-center">
                 <div class="col-lg-6 col-md-12">
                     <div class="services_section_thumb">
-                        <img src="{{ asset('front-asset/assets/img/about/history.jpg') }}"  alt="">
+                        <img src="{{ asset('front-asset/assets/img/about/history.jpg') }}" alt="">
                     </div>
                 </div>
                 <div class="col-lg-6 col-md-12">
                     <div class="unlimited_services_content">
-                        <h1>History of  VGEARS BD LTD </h1>
-                        <p>VGears BD Ltd is a dynamic and forward-thinking company dedicated to providing high-quality lubricant products and services. Established in 2022, we have rapidly grown into a trusted name in the lubricant industry, serving a diverse range of clients across all over in Bangladesh. </p>
+                        <h1>History of VGEARS BD LTD </h1>
+                        <p>VGears BD Ltd is a dynamic and forward-thinking company dedicated to providing high-quality
+                            lubricant products and services. Established in 2022, we have rapidly grown into a trusted
+                            name in the lubricant industry, serving a diverse range of clients across all over in
+                            Bangladesh. </p>
                     </div>
                 </div>
             </div>
@@ -242,9 +245,9 @@
                         <div class="panel panel-default">
                             <div class="panel-heading">
                                 <h5 class="panel-title">
-                                    <a class="collapsed" role="button" data-bs-toggle="collapse" href="#faq-collapse4"
-                                        aria-expanded="false" aria-controls="faq-collapse4"> <span
-                                            class="button-faq"></span>
+                                    <a class="collapsed" role="button" data-bs-toggle="collapse"
+                                        href="#faq-collapse4" aria-expanded="false" aria-controls="faq-collapse4">
+                                        <span class="button-faq"></span>
                                         {{ $aboutFour->title }}
                                     </a>
                                 </h5>
