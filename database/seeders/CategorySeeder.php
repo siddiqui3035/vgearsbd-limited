@@ -16,11 +16,39 @@ class CategorySeeder extends Seeder
      */
     public function run()
     {
-        $sql = "INSERT INTO `categories` (`id`, `user_id`, `parent_id`, `name`, `status`, `deleted_at`, `created_at`, `updated_at`) VALUES
-        (1, 1, NULL, 'Oil', 0, NULL, '2023-03-26 11:16:03', '2023-03-26 11:16:03'),
-        (3, 1, 1, 'V Lube', 0, NULL, '2023-03-26 11:16:32', '2023-03-26 11:16:32'),
-        (4, 1, 1, 'V Race', 0, NULL, '2023-03-26 11:16:46', '2023-03-26 11:16:46');";
+        $categories = [
+            [
+                "id" => "1",
+                "user_id" => "1",
+                "parent_id" => null,
+                "name" => "Oil",
+                "status" => "0",
+                "deleted_at" => null,
+                "created_at" => now(),
+                "updated_at" => now(),
+            ],
+            [
+                "id" => "3",
+                "user_id" => "1",
+                "parent_id" => "1",
+                "name" => "V Lube",
+                "status" => "0",
+                "deleted_at" => null,
+                "created_at" =>  now(),
+                "updated_at" => now(),
+            ],
+            [
+                "id" => "4",
+                "user_id" => "1",
+                "parent_id" => "1",
+                "name" => "V Race",
+                "status" => "0",
+                "deleted_at" => null,
+                "created_at" => now(),
+                "updated_at" => now(),
+            ],
+        ];
 
-        DB::insert($sql);
+        Category::insert($categories);
     }
 }

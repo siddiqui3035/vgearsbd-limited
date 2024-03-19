@@ -125,8 +125,12 @@
                 <div class="row align-items-center">
                     <div class="col-lg-2 col-md-3 col-sm-3 col-3">
                         <div class="logo">
-                            <a href="{{ route('home') }}"><img
-                                    src="{{ asset('front-asset/assets/img/logo/vlogo.png') }}" alt=""></a>
+                                <a href="{{ route('home') }}">
+                                    <div class="d-flex align-items-center justify-between">
+                                        <img src="{{ asset('front-asset/assets/img/logo/vlogo.png') }}" alt="">
+                                        <p class="text-danger font-weight-bold">LIMITED</p>
+                                    </div>
+                                </a>
                         </div>
                     </div>
                     <div class="col-lg-10 col-md-6 col-sm-7 col-8">

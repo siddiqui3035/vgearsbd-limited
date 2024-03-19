@@ -2,8 +2,12 @@
 
 namespace App\Http\Controllers\Admin;
 
+use Exception;
 use App\Models\OurTeam;
+use Illuminate\Support\Str;
+use App\Services\FileUploadService;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\OurTeamRequest;
 use Illuminate\Support\Facades\Storage;
 use RealRashid\SweetAlert\Facades\Alert;
 use App\Http\Requests\StoreOurTeamRequest;
@@ -23,30 +27,38 @@ class OurTeamController extends Controller
         return view('admin.our-team.create');
     }
 
-    public function store(StoreOurTeamRequest $request)
+    public function store(OurTeamRequest $request)
     {
-        $path = "";
-        if ($request->hasFile('image')) {
-            $path = $request->file('image')->store('images/teams');
-        }
+        try {
+            $params = $request->only([
+                'name',
+                'designation',
+                'details'
+            ]);
 
-        $ourTeam = OurTeam::create([
-            'name' => $request->get('name'),
-            'degnigation' => $request->get('degnigation'),
-            'details' => $request->get('details'),
-            'image' => $path,
-        ]);
+            if ($request->hasFile('image')) {
+                $filePath = config('commonconfig.team_image');
+                $fileName = Str::snake($request->get('name'));
+                $params['image'] = app(FileUploadService::class)
+                    ->upload($request->file('image'), $filePath, $fileName, '', '', 'public');
+                if (!$params['image']) {
+                    throw new Exception(__('Failed to upload image.'));
+                }
+            }
 
-        if (!empty($ourTeam)) {
-            // return redirect()->route('teams.index')->with('SUCCESS', 'Team member Created');
-            Alert::success('Success', 'Team member Created Successfully.');
-            return redirect()->route('teams.index');
-        }
-        // return redirect()->back()->withInput()->with('ERROR', 'Something Wrong!');
-        Alert::error('Error', 'Something wrong!');
+            if (!OurTeam::create($params)) {
+                throw new Exception(__('Failed to create team.'));
+            }
+        } catch (Exception $e) {
+            logs()->error($e);
+            Alert::error('Error', 'Something wrong!');
             return redirect()
                 ->back()
                 ->withInput();
+        }
+
+        Alert::success('Success', 'Team member Created Successfully.');
+        return redirect()->route('teams.index');
     }
 
     public function show(OurTeam $team)
@@ -62,25 +74,35 @@ class OurTeamController extends Controller
         return view('admin.our-team.edit', $data);
     }
 
-    public function update(UpdateOurTeamRequest $request, OurTeam $team)
+    public function update(OurTeamRequest $request, OurTeam $team)
     {
-        $data = $request->validated();
-
-        if ($request->hasFile('image')) {
-            if ($team->image) {
-                Storage::delete($team->image);
+        try {
+            $params = $request->only([
+                'name',
+                'designation',
+                'details'
+            ]);
+            if ($request->hasFile('image')) {
+                $filePath = config('commonconfig.team_image');
+                $fileName = Str::snake($request->get('name'));
+                $params['image'] = app(FileUploadService::class)
+                    ->upload($request->file('image'), $filePath, $fileName, '', '', 'public');
+                if (!$params['image']) {
+                    throw new Exception(__('Failed to upload image.'));
+                }
             }
-            $data['image'] = $request->file('image')->store('images/teams');
-        }
 
-        if (empty($team->update($data))) {
-            // return redirect()->route('teams.index')->with('SUCCESS', 'Team member Updated');
+            if (!$team->update($params)) {
+                throw new Exception(__('Failed to update team.'));
+            }
+        } catch (Exception $e) {
+            logs()->error($e);
             Alert::error('Error', 'Something wrong!');
             return redirect()
                 ->back()
                 ->withInput();
         }
-        // return redirect()->back()->withInput()->with('ERROR', 'Something Wrong!');
+
         Alert::success('Success', 'Team member Updated Successfully.');
         return redirect()->route('teams.index');
     }

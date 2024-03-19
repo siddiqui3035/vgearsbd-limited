@@ -16,10 +16,27 @@ class BrandSeeder extends Seeder
      */
     public function run()
     {
-        $sql = "INSERT INTO `brands` (`id`, `name`, `image`, `status`, `deleted_at`, `created_at`, `updated_at`) VALUES
-        (1, 'V One', 'storage/images/brands/wGV24jxHoYlPTMRyXcf9MQRVgC9Z54j5oxRmWfTK.png', 0, NULL, '2023-03-26 11:28:52', '2023-03-26 11:28:52'),
-        (2, 'G Race', 'storage/images/brands/95yZ59hKCTZNKICadVCigOKtDIsDRRATAQ6ngs0n.png', 0, NULL, '2023-03-26 11:29:05', '2023-03-26 11:29:05');";
+        $brands = [
+            [
+                'name' => 'G race',
+                'image' => '_g_race_.png',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'name' => 'V one',
+                'image' => '_v_one_.png',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'name' => 'V oil',
+                'image' => '_v_oil_.png',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+        ];
 
-        DB::insert($sql);
+        Brand::insert($brands);
     }
 }
