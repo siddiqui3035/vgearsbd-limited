@@ -2,6 +2,8 @@
 
 namespace Database\Seeders;
 
+use App\Models\Category;
+use App\Models\ContactUs;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -15,12 +17,49 @@ class ContactUsSeeder extends Seeder
      */
     public function run()
     {
-        $sql = "INSERT INTO `contact_us` (`id`, `name`, `email`, `subject`, `message`, `status`, `deleted_at`, `created_at`, `updated_at`) VALUES
-        (1, 'Basia Thompson', 'sydamebana@mailinator.com', 'Exercitation qui et', 'Qui ab dolor aliquip', 0, NULL, '2023-03-31 23:36:20', '2023-03-31 23:36:20'),
-        (2, 'Nora Pena', 'sehys@mailinator.com', 'Illo ad accusamus en', 'Quis occaecat mollit', 0, NULL, '2023-03-31 23:36:25', '2023-03-31 23:36:25'),
-        (3, 'Nasim Lester', 'fyraf@mailinator.com', 'Deserunt consequat', 'Quam dolore ut sit e', 0, NULL, '2023-03-31 23:36:30', '2023-03-31 23:36:30'),
-        (4, 'Maile Duran', 'xise@mailinator.com', 'Amet et quis conseq', 'Molestiae Nam qui ac', 0, NULL, '2023-03-31 23:36:35', '2023-03-31 23:36:35');";
+        $contacts = [
+            [
+                "name" => "Basia Thompson",
+                "email" => "sydamebana@mailinator.com",
+                "subject" => "Exercitation qui et",
+                "message" => "Qui ab dolor aliquip",
+                "status" => "0",
+                "deleted_at" => null,
+                "created_at" => now(),
+                "updated_at" => now(),
+            ],
+            [
+                "name" => "Nora Pena",
+                "email" => "sehys@mailinator.com",
+                "subject" => "Illo ad accusamus en",
+                "message" => "Quis occaecat mollit",
+                "status" => "0",
+                "deleted_at" => null,
+                "created_at" => now(),
+                "updated_at" => now(),
+            ],
+            [
+                "name" => "Nasim Lester",
+                "email" => "fyraf@mailinator.com",
+                "subject" => "Deserunt consequat",
+                "message" => "Quam dolore ut sit e",
+                "status" => "0",
+                "deleted_at" => null,
+                "created_at" => now(),
+                "updated_at" => now(),
+            ],
+            [
+                "name" => "Maile Duran",
+                "email" => "xise@mailinator.com",
+                "subject" => "Amet et quis conseq",
+                "message" => "Molestiae Nam qui ac",
+                "status" => "0",
+                "deleted_at" => null,
+                "created_at" => now(),
+                "updated_at" => now(),
+            ],
+        ];
 
-        DB::insert($sql);
+        ContactUs::insert($contacts);
     }
 }

@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers\Admin;
 
+use Exception;
 use App\Models\Blog;
+use Illuminate\Support\Str;
+use App\Http\Requests\BlogRequest;
+use App\Services\FileUploadService;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\StoreBlogRequest;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\UpdateBlogRequest;
 use RealRashid\SweetAlert\Facades\Alert;
@@ -23,29 +26,36 @@ class BlogController extends Controller
         return view('admin.blog.create');
     }
 
-    public function store(StoreBlogRequest $request)
+    public function store(BlogRequest $request)
     {
-        $path = "";
-        if ($request->hasFile('image')) {
-            $path = $request->file('image')->store('images/blogs');
-        }
+        try {
+            $params = $request->only([
+                'title',
+                'category',
+                'short_description',
+                'long_description'
+            ]);
 
-        $blog = Blog::create([
-            'title' => $request->get('title'),
-            'category' => $request->get('category'),
-            'short_description' => $request->get('short_description'),
-            'long_description' => $request->get('long_description'),
-            'image' => $path,
-        ]);
+            if ($request->hasFile('image')) {
+                $filePath = config('commonconfig.blog_image');
+                $fileName = Str::snake($request->get('title'));
+                $params['image'] = app(FileUploadService::class)
+                    ->upload($request->file('image'), $filePath, $fileName, '', '', 'public');
+                if (!$params['image']) {
+                    throw new Exception(__('Failed to upload image.'));
+                }
+            }
 
-        if (empty($blog)) {
+            if (!Blog::create($params)) {
+                throw new Exception(__('Failed to create blog.'));
+            }
+        } catch (Exception $e) {
+            logs()->error($e);
             Alert::error('Error', 'Something wrong!');
             return redirect()
                 ->back()
                 ->withInput();
-            // return redirect()->route('blogs.index')->with('SUCCESS', 'Blog Created');
         }
-        // return redirect()->back()->withInput()->with('ERROR', 'Something Wrong!');
         Alert::success('Success', 'Blog Created Successfully.');
         return redirect()->route('blogs.index');
     }
@@ -62,27 +72,57 @@ class BlogController extends Controller
         return view('admin.blog.edit', $data);
     }
 
-    public function update(UpdateBlogRequest $request, Blog $blog)
+    public function update(BlogRequest $request, Blog $blog)
     {
-        $data = $request->validated();
+        try {
+            $params = $request->only([
+                'title',
+                'category',
+                'short_description',
+                'long_description'
+            ]);
 
-        if ($request->hasFile('image')) {
-            if ($blog->image) {
-                Storage::delete($blog->image);
+            if ($request->hasFile('image')) {
+                $filePath = config('commonconfig.blog_image');
+                $fileName = random_string();
+                $params['image'] = app(FileUploadService::class)
+                    ->upload($request->file('image'), $filePath, $fileName, '', '', 'public');
+                if (!$params['image']) {
+                    throw new Exception(__('Failed to upload image.'));
+                }
             }
-            $data['image'] = $request->file('image')->store('images/blogs');
-        }
 
-        if (empty($blog->update($data))) {
+            if (!$blog->update($params)) {
+                throw new Exception(__('Failed to update blog.'));
+            }
+        } catch (Exception $e) {
+            logs()->error($e);
             Alert::error('Error', 'Something wrong!');
             return redirect()
                 ->back()
                 ->withInput();
-            // return redirect()->route('blogs.index')->with('SUCCESS', 'Blog Updated');
         }
+
         Alert::success('Success', 'Blog Updated Successfully.');
         return redirect()->route('blogs.index');
-        // return redirect()->back()->withInput()->with('ERROR', 'Something Wrong!');
+        // $data = $request->validated();
+
+        // if ($request->hasFile('image')) {
+        //     if ($blog->image) {
+        //         Storage::delete($blog->image);
+        //     }
+        //     $data['image'] = $request->file('image')->store('images/blogs');
+        // }
+
+        // if (empty($blog->update($data))) {
+        //     Alert::error('Error', 'Something wrong!');
+        //     return redirect()
+        //         ->back()
+        //         ->withInput();
+        //     // return redirect()->route('blogs.index')->with('SUCCESS', 'Blog Updated');
+        // }
+
+        // // return redirect()->back()->withInput()->with('ERROR', 'Something Wrong!');
     }
 
     public function destroy(Blog $blog)

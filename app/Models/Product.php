@@ -2,13 +2,16 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Casts\Attribute;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Product extends Model
 {
     use HasFactory, SoftDeletes;
+
+    const PRODUCT_THUMB = 'images/products/thumbnail';
 
     protected $fillable =[
         'category_id',
@@ -68,5 +71,15 @@ class Product extends Model
     public function setImagesAttribute($value)
     {
         $this->attributes['images'] = json_encode($value);
+    }
+
+    protected function thumble(): Attribute
+    {
+        return Attribute::make(
+            get: fn (mixed $value) =>
+            valid_image('storage/'.self::PRODUCT_THUMB, $value) ?
+            asset('storage/'.self::PRODUCT_THUMB.$value) :
+            asset((config('commonconfig.default_image_path').'default.png'))
+        );
     }
 }

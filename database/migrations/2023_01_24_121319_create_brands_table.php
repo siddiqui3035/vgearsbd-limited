@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('brands', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->string('name')->unique();
             $table->string('image');
             $table->boolean('status')->default(0);
             $table->softDeletes();

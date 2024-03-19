@@ -71,7 +71,13 @@
                     <div class="widgets_container contact_us">
                         <div class="footer_logo">
                             {{-- <div class="earth"></div> --}}
-                            <a href="index.html"><img src="{{ asset('front-asset/assets/img/logo/vlogo.png') }}" style="height: 150px;" alt=""></a>
+                            {{-- <a href="index.html">
+                                <img src="{{ asset('front-asset/assets/img/logo/vlogo.png') }}" style="height: 150px;" alt="">
+                            </a> --}}
+                            <div class="d-flex align-items-center justify-between">
+                                <img src="{{ asset('front-asset/assets/img/logo/vlogo.png') }}" style="height: 150px;" alt="">
+                                <p class="text-danger font-weight-bold">LIMITED</p>
+                            </div>
                         </div>
                         {{-- <p class="footer_desc">We are a team of designers and developers that create high quality
                             eCommerce, WordPress, Shopify .</p>

@@ -2,7 +2,12 @@
 
 namespace App\Http\Controllers\Admin;
 
+use Exception;
 use App\Models\Brand;
+use RuntimeException;
+use Illuminate\Support\Str;
+use App\Http\Requests\BrandRequest;
+use App\Services\FileUploadService;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\StoreBrandRequest;
@@ -23,24 +28,33 @@ class BrandController extends Controller
         return view('admin.brands.create');
     }
 
-    public function store(StoreBrandRequest $request)
+    public function store(BrandRequest $request)
     {
-        $path = "";
-        if ($request->hasFile('image')) {
-            $path = $request->file('image')->store('images/brands');
-        }
 
-        $banner = Brand::create([
-            'name' => $request->get('name'),
-            'image' => $path,
-        ]);
+        try {
+            $params = $request->only(['name']);
 
-        if (empty($banner)) {
+            if ($request->hasFile('image')) {
+                $filePath = config('commonconfig.brand_image');
+                $fileName = Str::snake($request->get('name'));
+                $params['image'] = app(FileUploadService::class)
+                    ->upload($request->file('image'), $filePath, $fileName, '', '', 'public');
+                if (!$params['image']) {
+                    throw new RuntimeException(__('Failed to upload image.'));
+                }
+            }
+
+            if (!Brand::create($params)) {
+                throw new RuntimeException(__('Failed to create brand.'));
+            }
+        } catch (Exception $e) {
+            logs()->error($e);
             Alert::error('Error', 'Something wrong!');
             return redirect()
                 ->back()
                 ->withInput();
         }
+
         Alert::success('Success', 'Brand Created Successfully.');
         return redirect()->route('brands.index');
     }
@@ -57,23 +71,31 @@ class BrandController extends Controller
         return view('admin.brands.edit', $data);
     }
 
-    public function update(UpdateBrandRequest $request, Brand $brand)
+    public function update(BrandRequest $request, Brand $brand)
     {
-        $data = $request->validated();
-
-        if ($request->hasFile('image')) {
-            if ($brand->image) {
-                Storage::delete($brand->image);
+        try {
+            $params = $request->only(['name']);
+            if ($request->hasFile('image')) {
+                $filePath = config('commonconfig.brand_image');
+                $fileName = Str::snake($request->get('name'));
+                $params['image'] = app(FileUploadService::class)
+                    ->upload($request->file('image'), $filePath, $fileName, '', '', 'public');
+                if (!$params['image']) {
+                    throw new RuntimeException(__('Failed to upload image.'));
+                }
             }
-            $data['image'] = $request->file('image')->store('images/brands');
-        }
 
-        if (empty($brand->update($data))) {
+            if (!$brand->update($params)) {
+                throw new RuntimeException(__('Failed to update brand.'));
+            }
+        } catch (Exception $e) {
+            logs()->error($e);
             Alert::error('Error', 'Something wrong!');
             return redirect()
                 ->back()
                 ->withInput();
         }
+
         Alert::success('Success', 'Brand Updated Successfully.');
         return redirect()->route('brands.index');
     }
