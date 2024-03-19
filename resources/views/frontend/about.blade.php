@@ -104,9 +104,6 @@
                     <div class="unlimited_services_content">
                         <h1>History of  VGEARS BD LTD </h1>
                         <p>VGears BD Ltd is a dynamic and forward-thinking company dedicated to providing high-quality lubricant products and services. Established in 2022, we have rapidly grown into a trusted name in the lubricant industry, serving a diverse range of clients across all over in Bangladesh. </p>
-                        {{-- <div class="view__work">
-                            <a href="#">MORE INFO  <i class="fa fa-angle-right"></i></a>
-                        </div> --}}
                     </div>
                 </div>
             </div>
