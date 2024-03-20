@@ -76,16 +76,20 @@
                         <label for="exampleSelectGender">Packaging Type</label>
                         <select class="form-control" id="packaging_type" name="packaging_type">
                             <option value="">Select packaging type</option>
-                            <option value="0" @isset($product) {{ $product->status == 0 ? "selected=true" : "" }} @endisset>
+                            <option value="0"
+                                @isset($product) {{ $product->status == 0 ? 'selected=true' : '' }} @endisset>
                                 Container
                             </option>
-                            <option value="1" @isset($product) {{ $product->status == 1 ? "selected=true" : "" }} @endisset>
+                            <option value="1"
+                                @isset($product) {{ $product->status == 1 ? 'selected=true' : '' }} @endisset>
                                 Can
                             </option>
-                            <option value="2" @isset($product) {{ $product->status == 2 ? "selected=true" : "" }} @endisset>
+                            <option value="2"
+                                @isset($product) {{ $product->status == 2 ? 'selected=true' : '' }} @endisset>
                                 Bottol
                             </option>
-                            <option value="3" @isset($product) {{ $product->status == 3 ? "selected=true" : "" }} @endisset>
+                            <option value="3"
+                                @isset($product) {{ $product->status == 3 ? 'selected=true' : '' }} @endisset>
                                 Others
                             </option>
                         </select>
@@ -105,10 +109,12 @@
                         <select class="form-control" id="status" name="status">
                             <option value="">Select a status</option>
 
-                            <option value="0" @isset($brand) {{ $brand->status == 0 ? "selected=true" : "" }} @endisset>
+                            <option value="0"
+                                @isset($brand) {{ $brand->status == 0 ? 'selected=true' : '' }} @endisset>
                                 Active
                             </option>
-                            <option value="1" @isset($brand) {{ $brand->status ? "selected=true" : "" }} @endisset>
+                            <option value="1"
+                                @isset($brand) {{ $brand->status ? 'selected=true' : '' }} @endisset>
                                 Inactive
                             </option>
                         </select>
@@ -144,11 +150,22 @@
                                                             alt="Sheep" id="images" class="images mt-2 mr-2">
                                                         <span id="cross" class="cross cursor-pointer closes">
                                                             <i class=" text-danger" onclick="removeImage(this)"
-                                                            data-src="{{ explode(env('APP_URL') . '/', $image)[1] }}"
+                                                            data-src="{{ explode(env('APP_URL') . '/', $image)[0] }}"
                                                             aria-hidden="true">X</i>
                                                         </span>
                                                     </div>
                                                 @endforeach
+                                                {{-- @foreach ($product->images as $image)
+                                                    <div class="img-wraps">
+                                                        <img src="{{ asset($image) }}" width="100" height="180"
+                                                            alt="Sheep" id="images" class="images mt-2 mr-2">
+                                                        <span class="cross cursor-pointer closes">
+                                                            <i class=" text-danger" onclick="removeImage(this)"
+                                                                data-src="{{ env('APP_URL') . '/' . $image }}"
+                                                                aria-hidden="true">X</i>
+                                                        </span>
+                                                    </div>
+                                                @endforeach --}}
                                             </div>
                                         </div>
                                     </div>
@@ -242,6 +259,21 @@
                 $("#deleted-images").append('<input id="images" value="' + $(event).data("src") +
                     '" type="hidden" name="deleted_images[]" multiple/>')
             }
+            // let crosses = document.querySelectorAll('.cross');
+            // let images = document.querySelectorAll('.images');
+
+            // crosses.forEach(function(cross) {
+            //     cross.addEventListener('click', function(e) {
+            //         cross.parentElement
+            //     .remove(); // Remove the parent element which contains both the image and the cross
+            //         removeImage(cross.getAttribute(
+            //         'data-src')); // Pass the data-src attribute value to removeImage function
+            //     });
+            // });
+
+            // function removeImage(src) {
+            //     $("#deleted-images").append('<input value="' + src + '" type="hidden" name="deleted_images[]" multiple/>');
+            // }
         </script>
     @endpush
 </x-app-layout>

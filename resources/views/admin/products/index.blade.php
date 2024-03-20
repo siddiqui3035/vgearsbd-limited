@@ -27,7 +27,6 @@
                         </thead>
                         <tbody>
                             @forelse($products as $product)
-                            {{-- @dump($product) --}}
                                 <tr>
                                     <td> {{ $loop->iteration }} </td>
                                     <td>
