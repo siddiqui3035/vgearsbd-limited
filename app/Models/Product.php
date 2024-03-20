@@ -55,12 +55,40 @@ class Product extends Model
         return $this->belongsTo(Unit::class, "purchase_unit_id")->withTrashed();
     }
 
+    // public function getImagesAttribute($value)
+    // {
+    //     $values = [];
+    //     if ($value) {
+    //         foreach (json_decode($value) as $image) {
+    //             $values[] = asset('storage/'.$image);
+    //         }
+    //         return $values;
+    //     }
+
+    //     return [];
+    // }
+
+    // public function setImagesAttribute($value)
+    // {
+    //     $this->attributes['images'] = json_encode($value);
+    // }
+
+    // public function getThumbleAttribute($value)
+    // {
+    //     return $value != '' ? asset('storage/' . $value) : '';
+    // }
+
+    public function setImagesAttribute($value)
+    {
+        $this->attributes['images'] = json_encode($value);
+    }
+
     public function getImagesAttribute($value)
     {
         $values = [];
-        if ($value) {
-            foreach (json_decode($value) as $img) {
-                $values[] = asset('storage/'.$img);
+        if($value) {
+            foreach(json_decode($value) as $img){
+                $values[] = asset('storage/' . $img);
             }
             return $values;
         }
@@ -68,18 +96,8 @@ class Product extends Model
         return [];
     }
 
-    public function setImagesAttribute($value)
+    public function getThumbleAttribute($value)
     {
-        $this->attributes['images'] = json_encode($value);
-    }
-
-    protected function thumble(): Attribute
-    {
-        return Attribute::make(
-            get: fn (mixed $value) =>
-            valid_image('storage/'.self::PRODUCT_THUMB, $value) ?
-            asset('storage/'.self::PRODUCT_THUMB.$value) :
-            asset((config('commonconfig.default_image_path').'default.png'))
-        );
+        return $value != '' ? asset('storage/' . $value) : '';
     }
 }

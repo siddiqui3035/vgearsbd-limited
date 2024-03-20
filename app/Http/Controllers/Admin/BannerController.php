@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers\Admin;
 
+use Exception;
 use App\Models\Banner;
+use Illuminate\Support\Str;
+use App\Services\FileUploadService;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Storage;
 use RealRashid\SweetAlert\Facades\Alert;
@@ -25,26 +28,34 @@ class BannerController extends Controller
 
     public function store(StoreBannerRequest $request)
     {
-        $path = "";
-        if ($request->hasFile('image')) {
-            $path = $request->file('image')->store('images/blogs');
-        }
+        try {
+            $params = $request->only([
+                'title_one',
+                'title_two',
+                'short_details',
+            ]);
 
-        $banner = Banner::create([
-            'title_one' => $request->get('title_one'),
-            'title_two' => $request->get('title_two'),
-            'short_details' => $request->get('short_details'),
-            'image' => $path,
-        ]);
+            if ($request->hasFile('image')) {
+                $filePath = config('commonconfig.banner_image');
+                $fileName = random_string();
+                $params['image'] = app(FileUploadService::class)
+                    ->upload($request->file('image'), $filePath, $fileName, '', '', 'public');
+                if (!$params['image']) {
+                    throw new Exception(__('Failed to upload image.'));
+                }
+            }
 
-        if (empty($banner)) {
-            // return redirect()->route('banners.index')->with('SUCCESS', 'Banner Created');
+            if (!Banner::create($params)) {
+                throw new Exception(__('Failed to create banner.'));
+            }
+        } catch (Exception $e) {
+            logs()->error($e);
             Alert::error('Error', 'Something wrong!');
             return redirect()
                 ->back()
                 ->withInput();
         }
-        // return redirect()->back()->withInput()->with('ERROR', 'Something Wrong!');
+
         Alert::success('Success', 'Banner Created Successfully.');
         return redirect()->route('banners.index');
     }
@@ -63,39 +74,62 @@ class BannerController extends Controller
 
     public function update(UpdateBannerRequest $request, Banner $banner)
     {
-        $data = $request->validated();
+        // $data = $request->validated();
 
-        if ($request->hasFile('image')) {
-            if ($banner->image) {
-                Storage::delete($banner->image);
+        // if ($request->hasFile('image')) {
+        //     if ($banner->image) {
+        //         Storage::delete($banner->image);
+        //     }
+        //     $data['image'] = $request->file('image')->store('images/banners');
+        // }
+
+        // if (empty($banner->update($data))) {
+        //     Alert::error('Error', 'Something wrong!');
+        //     return redirect()
+        //         ->back()
+        //         ->withInput();
+        //     // return redirect()->route('banners.index')->with('SUCCESS', 'Banner Updated');
+        // }
+
+        // // return redirect()->back()->withInput()->with('ERROR', 'Something Wrong!');
+
+        try {
+            $params = $request->only(['name']);
+            if ($request->hasFile('image')) {
+                $filePath = config('commonconfig.banner_image');
+                $fileName = random_string();
+                $params['image'] = app(FileUploadService::class)
+                    ->upload($request->file('image'), $filePath, $fileName, '', '', 'public');
+                if (!$params['image']) {
+                    throw new Exception(__('Failed to upload image.'));
+                }
             }
-            $data['image'] = $request->file('image')->store('images/banners');
-        }
 
-        if (empty($banner->update($data))) {
+            if (!$banner->update($params)) {
+                throw new Exception(__('Failed to update banner.'));
+            }
+        } catch (Exception $e) {
+            logs()->error($e);
             Alert::error('Error', 'Something wrong!');
             return redirect()
                 ->back()
                 ->withInput();
-            // return redirect()->route('banners.index')->with('SUCCESS', 'Banner Updated');
         }
+
         Alert::success('Success', 'Banner Updated Successfully.');
         return redirect()->route('banners.index');
-        // return redirect()->back()->withInput()->with('ERROR', 'Something Wrong!');
     }
 
     public function destroy(Banner $banner)
     {
-        if($banner->image){
+        if ($banner->image) {
             Storage::delete($banner->image);
         }
 
-        if($banner->delete()){
-            // return redirect()->back()->with('SUCCESS', 'Banner deleted');
+        if ($banner->delete()) {
             Alert::success('Success', 'Banner Deleted Successfully.');
             return redirect()->back();
         }
-        // return redirect()->back()->with('ERROR', 'Something Wrong!');
         Alert::error('Error', 'Something wrong!');
         return redirect()
             ->back()

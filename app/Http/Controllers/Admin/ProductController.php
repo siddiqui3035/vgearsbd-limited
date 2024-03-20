@@ -44,6 +44,18 @@ class ProductController extends Controller
     public function store(StoreProductRequest $request)
     {
         try {
+            $path = [];
+            if ($request->hasFile('images')) {
+                foreach ($request->file('images') as $file) {
+                    $path[] = $file->store('images/products/images');
+                }
+            }
+
+            $thumblePath = "";
+            if ($request->hasFile('thumble')) {
+                $thumblePath = $request->file('thumble')->store('images/products/thumble');
+            }
+
             $params = $request->only([
                 "category_id",
                 "brand_id",
@@ -56,43 +68,11 @@ class ProductController extends Controller
                 "purchase_price",
                 "sale_price",
                 "details",
-                "packaging_type",
+                "packaging_type"
             ]);
 
-            if ($request->hasFile('thumble')) {
-                $filePath = config('commonconfig.product_thumb');
-                $fileName = Str::snake($request->get('name'.$request->get('product_code')));
-                // dd($fileName);
-                $params['thumble'] = app(FileUploadService::class)
-                    ->upload($request->file('thumble'), $filePath, $fileName, '', '', 'public');
-                if (!$params['thumble']) {
-                    throw new Exception(__('Failed to upload image.'));
-                }
-            }
-
-            // if ($request->hasFile('images')) {
-            //     foreach($request->file('images') as $file) {
-            //         $filePath = config('commonconfig.product_image');
-            //         $fileName = random_string();
-            //         $params['images'] = app(FileUploadService::class)
-            //             ->upload($file, $filePath, $fileName, '', '', 'public');
-            //     }
-
-            //     if (!$params['images']) {
-            //         throw new Exception(__('Failed to upload image.'));
-            //     }
-            // }
-
-            if ($request->hasFile("images")) {
-                foreach ($request->file('images') as $file) {
-                    dd($file);
-                    // $imageNames[] = $file->store("images/products");
-                    $filePath = config('commonconfig.product_image');
-                    $fileName = random_string();
-                    $imageNames[] = app(FileUploadService::class)
-                        ->upload($file, $filePath, $fileName, '', '', 'public');
-                }
-            }
+            $params['images'] = $path;
+            $params['thumble'] = $thumblePath;
 
             if (!Product::create($params)) {
                 throw new Exception(__('Failed to create product.'));
@@ -107,28 +87,6 @@ class ProductController extends Controller
 
         Alert::success('Success', 'Product Created Successfully.');
         return redirect()->route('products.index');
-        // $path = "";
-        // if ($request->hasFile('thumble')) {
-        //     $path = $request->file('thumble')->store('images/products');
-        // }
-
-        // $imageNames = [];
-
-
-
-        // $product = Product::create([
-
-        //     'thumble' => $path,
-        //     'images' => $imageNames,
-        // ]);
-
-        // if (empty($product)) {
-        //     Alert::error('Error', 'Something wrong!');
-        //     return redirect()
-        //         ->back()
-        //         ->withInput();
-        // }
-
     }
 
     public function show(Product $product)
@@ -151,6 +109,7 @@ class ProductController extends Controller
         $data['brands'] = Brand::pluck('name', 'id');
         $data['units'] = Unit::where('base_unit', 1)->pluck('name', 'id');
         $data['product'] = $product;
+        $data['images'] = json_decode($product->getRawOriginal('images'));
 
         return view('admin.products.edit', $data);
     }
@@ -168,13 +127,10 @@ class ProductController extends Controller
             $images = array_diff($images, $deleteImages);
         }
 
-        if ($request->hasFile("images")) {
+        $images = [];
+        if ($request->hasFile('images')) {
             foreach ($request->file('images') as $file) {
-                // $imageNames[] = $file->store("images/products");
-                $filePath = config('commonconfig.product_image');
-                $fileName = Str::snake($request->get('name'));
-                $imageNames[] = app(FileUploadService::class)
-                    ->upload($file, $filePath, $fileName, '', '', 'public');
+                $images[] = $file->store('images/products/images');
             }
         }
 
