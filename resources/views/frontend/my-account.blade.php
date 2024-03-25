@@ -7,7 +7,7 @@
                     <div class="breadcrumb_content">
                         <h3>My Account</h3>
                         <ul>
-                            <li><a href="index.html">home</a></li>
+                            <li><a href="{{ route('home') }}">home</a></li>
                             <li>My account</li>
                         </ul>
                     </div>
@@ -71,28 +71,32 @@
                                     <table class="table">
                                         <thead>
                                             <tr>
-                                                <th>Order</th>
-                                                <th>Date</th>
+                                                <th>Order Number</th>
+                                                <th>Product Name</th>
+                                                <th>Product Qty</th>
+                                                <th>Order Date</th>
                                                 <th>Status</th>
                                                 <th>Total</th>
-                                                <th>Actions</th>
+                                                {{-- <th>Actions</th> --}}
                                             </tr>
                                         </thead>
                                         <tbody>
+                                            @forelse ($orders as $order )
                                             <tr>
-                                                <td>1</td>
-                                                <td>May 10, 2018</td>
-                                                <td><span class="success">Completed</span></td>
-                                                <td>$25.00 for 1 item </td>
-                                                <td><a href="cart.html" class="view">view</a></td>
+                                                <td>{{ $order->order_number }}</td>
+                                                <td>{{ $order->product->name }}</td>
+                                                <td>{{ $order->product_qty }}</td>
+                                                <td>{{ $order->created_at->format('d m Y') }}</td>
+                                                <td><span class="success">{{ $order->status }}</span></td>
+                                                <td>{{ $order->total_price }}</td>
+                                                {{-- <td><a href="cart.html" class="view">view</a></td> --}}
                                             </tr>
+                                            @empty
+
                                             <tr>
-                                                <td>2</td>
-                                                <td>May 10, 2018</td>
-                                                <td>Processing</td>
-                                                <td>$17.00 for 1 item </td>
-                                                <td><a href="cart.html" class="view">view</a></td>
+                                                <h2>No order found</h2>
                                             </tr>
+                                            @endforelse
                                         </tbody>
                                     </table>
                                 </div>

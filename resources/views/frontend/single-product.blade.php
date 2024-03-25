@@ -6,7 +6,7 @@
                 <div class="col-12">
                     <div class="breadcrumb_content">
                         <ul>
-                            <li><a href="index.html">home</a></li>
+                            <li><a href="{{ route('home') }}">home</a></li>
                             <li>product details</li>
                         </ul>
                     </div>
@@ -24,7 +24,7 @@
                     <div class="product-details-tab">
                         <div id="img-1" class="zoomWrapper single-zoom">
                             <a href="#">
-                                <img id="zoom1" src="{{ asset($product->thumble) }}"
+                                <img id="zoom1" src="{{ asset($product->thumble) }}" style="height: 350px!important; display: inline-block;"
                                     data-zoom-image="{{ asset($product->thumble) }}" alt="big-1">
                             </a>
                         </div>
@@ -35,7 +35,7 @@
                                     <a href="#" class="elevatezoom-gallery active" data-update=""
                                         data-image="{{ asset($image) }}"
                                         data-zoom-image="{{ asset($image) }}">
-                                        <img src="{{ asset($image) }}" alt="zo-th-1" />
+                                        <img src="{{ asset($image) }}" style="height: 150px!important" alt="zo-th-1" />
                                     </a>
                                 </li>
                                 @empty
@@ -81,15 +81,15 @@
                         <form action="{{ route('cart.store') }}" method="POST">
                             @csrf
                             <h1><a href="#">{{ $product->name }}</a></h1>
-                            <div class="product_nav">
-                                <ul>
-                                    <li class="prev"><a href="product-details.html"><i
-                                                class="fa fa-angle-left"></i></a></li>
-                                    <li class="next"><a href="variable-product.html"><i
-                                                class="fa fa-angle-right"></i></a></li>
-                                </ul>
-                            </div>
-                            <div class=" product_ratting">
+                                {{-- <div class="product_nav">
+                                    <ul>
+                                        <li class="prev"><a href="product-details.html"><i
+                                                    class="fa fa-angle-left"></i></a></li>
+                                        <li class="next"><a href="variable-product.html"><i
+                                                    class="fa fa-angle-right"></i></a></li>
+                                    </ul>
+                                </div> --}}
+                            {{-- <div class=" product_ratting">
                                 <ul>
                                     <li><a href="#"><i class="icon-star"></i></a></li>
                                     <li><a href="#"><i class="icon-star"></i></a></li>
@@ -99,7 +99,7 @@
                                     <li class="review"><a href="#"> (customer review ) </a></li>
                                 </ul>
 
-                            </div>
+                            </div> --}}
                             <div class="price_box">
                                 <span class="current_price">BDT&nbsp; {{ $product->sale_price }}.00</span>
                                 {{-- <span class="old_price">£80.00</span> --}}
@@ -124,12 +124,12 @@
                                 <input name="product_id" min="1" max="10" value="{{ $product->id }}" type="hidden">
                                 <button class="button" type="submit">add to cart</button>
                             </div>
-                            <div class=" product_d_action">
+                            {{-- <div class=" product_d_action">
                                 <ul>
                                     <li><a href="#" title="Add to wishlist">+ Add to Wishlist</a></li>
-                                    {{-- <li><a href="#" title="Add to wishlist">+ Compare</a></li> --}}
+                                    <li><a href="#" title="Add to wishlist">+ Compare</a></li>
                                 </ul>
-                            </div>
+                            </div> --}}
                             <div class="product_meta">
                                 <span>Category: <a href="#">{{ $product->category->name }}</a></span>
                             </div>

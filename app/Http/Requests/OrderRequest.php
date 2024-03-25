@@ -2,9 +2,10 @@
 
 namespace App\Http\Requests;
 
+use Illuminate\Validation\Rule;
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreCartRequest extends FormRequest
+class OrderRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,12 +25,23 @@ class StoreCartRequest extends FormRequest
     public function rules()
     {
         return [
-            'product_qty' => [
+            'country' => [
                 'required',
-                'integer',
-                'max:10',
-                'min:1'
+                Rule::in(['bangladesh'])
             ],
+            'address' => [
+                'required'
+            ],
+            'city' => [
+                'required'
+            ],
+            'postal_code' => [
+                'required'
+            ],
+            'payment_method' => [
+                'required',
+                Rule::in(['cod'])
+            ]
         ];
     }
 }

@@ -7,7 +7,7 @@
                     <div class="breadcrumb_content">
                         <h3>Blog</h3>
                         <ul>
-                            <li><a href="index.html">home</a></li>
+                            <li><a href="{{ route('home') }}">home</a></li>
                             <li>blog details</li>
                         </ul>
                     </div>

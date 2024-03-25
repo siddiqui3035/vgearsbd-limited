@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Models\Cart;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\StoreCartRequest;
+use App\Http\Requests\CartRequest;
 use App\Http\Requests\UpdateCartRequest;
 use RealRashid\SweetAlert\Facades\Alert;
 
@@ -14,8 +14,7 @@ class CartController extends Controller
     {
         $data['carts'] = Cart::with('product')->get();
 
-        // dd($data);
-        return view('frontend.cart',$data);
+        return view('frontend.cart', $data);
     }
 
     public function create()
@@ -23,12 +22,23 @@ class CartController extends Controller
         return view('frontend.cart');
     }
 
-    public function store(StoreCartRequest $request)
+    public function store(CartRequest $request)
     {
+        $existingCart = Cart::where('user_id', auth()->id())
+            ->where('product_id', $request->get('product_id'))
+            ->first();
+
+        if ($existingCart) {
+            $existingCart->increment('product_qty', $request->get('product_qty'));
+
+            Alert::success('Success', 'Product quantity updated successfully.');
+            return redirect()->route('cart.index');
+        }
+
         $cart = Cart::create([
             'user_id' => auth()->id(),
-            'product_id' => $request->input('product_id'),
-            'product_qty' => $request->input('product_qty'),
+            'product_id' => $request->get('product_id'),
+            'product_qty' => $request->get('product_qty'),
         ]);
 
         if (!empty($cart)) {
@@ -36,9 +46,9 @@ class CartController extends Controller
             return redirect()->route('cart.index');
         }
         Alert::error('Error', 'Something wrong!');
-            return redirect()
-                ->back()
-                ->withInput();
+        return redirect()
+            ->back()
+            ->withInput();
     }
 
     public function show(Cart $cart)
@@ -52,7 +62,7 @@ class CartController extends Controller
         return view('cart.edit', $data);
     }
 
-    public function update(UpdateCartRequest $request, Cart $cart)
+    public function update(CartRequest $request, Cart $cart)
     {
         $cart->update([
             'product_qty' => $request->input('product_qty'),
@@ -65,7 +75,7 @@ class CartController extends Controller
     {
         // $cart->delete();
 
-        if($cart->delete()){
+        if ($cart->delete()) {
             Alert::success('Success', 'Product removed successfully.');
             return redirect()->back();
         }
