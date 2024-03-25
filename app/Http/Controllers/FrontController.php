@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Blog;
+use App\Models\Cart;
 use App\Models\User;
 use App\Models\Brand;
 use App\Models\Banner;
@@ -11,6 +12,7 @@ use App\Models\OurTeam;
 use App\Models\Product;
 use App\Models\Category;
 use App\Models\AboutVgear;
+use App\Models\Order;
 use App\Models\SocialLink;
 use Illuminate\Http\Request;
 use Illuminate\Contracts\View\View;
@@ -37,8 +39,7 @@ class FrontController extends Controller
         $data['products'] = Product::orderBy('created_at', 'desc')
             ->where('status', 0)
             ->get();
-// dd($data);
-        // $data['continerProducts'] = Product::where('packaging_type', 0)->first();
+
         return View('frontend.layouts.index', $data);
     }
 
@@ -47,9 +48,6 @@ class FrontController extends Controller
         $data['blogs'] = Blog::orderBy('created_at', 'desc')
             ->where('status', 0)
             ->get();
-        // $data['abouts'] = AboutVgear::orderBy('created_at', 'desc')
-        //     ->where('status',0)->where('is_featured', 'no')
-        //     ->get();
 
         $data['aboutOne'] = AboutVgear::where('serial', 1)->first();
         $data['aboutTwo'] = AboutVgear::where('serial', 2)->first();
@@ -78,13 +76,16 @@ class FrontController extends Controller
     {
         $data['addresses'] = Address::all();
         $data['socialLinks'] = SocialLink::all();
+        $data['orders'] = Order::where('user_id', auth()->id())->get();
 
         return view('frontend.my-account', $data);
     }
 
-    public function ourBlogs(Request $request,Blog $blog)
+    public function ourBlogs(Blog $blog)
     {
-        $data['recentBlogs'] = Blog::orderBy('created_at', 'desc')->limit(3)->get();
+        $data['recentBlogs'] = Blog::orderBy('created_at', 'desc')
+            ->limit(3)
+            ->get();
         $data['blogs'] = Blog::paginate(15);
         $data['blog'] = $blog;
 
@@ -93,7 +94,9 @@ class FrontController extends Controller
 
     public function searchBlog(Request $request, Blog $blog)
     {
-        $data['recentBlogs'] = Blog::orderBy('created_at', 'desc')->limit(3)->get();
+        $data['recentBlogs'] = Blog::orderBy('created_at', 'desc')
+            ->limit(3)
+            ->get();
         $query = $request->input('search');
         $data['blog'] = $blog;
 
@@ -104,7 +107,7 @@ class FrontController extends Controller
 
             return view('frontend.blog-search', $data);
         } else {
-            Alert::success('Error', 'Unsopperted operation!');
+            Alert::success('Error', 'Unsupported operation!');
             return redirect()->back();
         }
     }
@@ -120,4 +123,12 @@ class FrontController extends Controller
         $data['products'] = Product::where('status', 0)->get();
         return view('frontend.products', $data);
     }
+
+    public function checkout(){
+        $data['addresses'] = Address::where('user_id', auth()->user()->id)->first();
+        $data['carts'] = Cart::with('product')->get();
+
+        return view('frontend.checkout', $data);
+    }
+
 }

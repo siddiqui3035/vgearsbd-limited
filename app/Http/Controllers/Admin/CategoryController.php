@@ -52,7 +52,9 @@ class CategoryController extends Controller
 
     public function show(Category $category)
     {
-        //
+        $data['products'] = $category->products()->get();
+
+        return view('frontend.category-product', $data);
     }
 
     public function edit(Category $category)

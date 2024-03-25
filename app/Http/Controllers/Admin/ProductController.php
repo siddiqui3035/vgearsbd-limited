@@ -9,7 +9,6 @@ use App\Models\Product;
 use App\Models\Category;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
-use App\Services\FileUploadService;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Storage;
 use RealRashid\SweetAlert\Facades\Alert;
@@ -142,6 +141,14 @@ class ProductController extends Controller
             $product->thumble = Storage::putFileAs('images/products', $request->file('thumble'), $fileName);
         }
 
+        $thumblePath = "";
+        if ($request->hasFile('thumble')) {
+            if ($product->thumble) {
+                Storage::delete($product->thumble);
+            }
+            $thumblePath = $request->file('thumble')->store('images/products/thumble');
+        }
+
         $allproducts = $request->only([
             "category_id",
             "brand_id",
@@ -157,6 +164,7 @@ class ProductController extends Controller
             "packaging_type",
         ]);
         $allproducts['images'] = $images;
+        $allproducts['thumble'] = $thumblePath;
 
         if (empty($product->update($allproducts))) {
             Alert::error('Error', 'Something wrong!');
