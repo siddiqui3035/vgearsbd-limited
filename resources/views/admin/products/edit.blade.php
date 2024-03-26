@@ -57,7 +57,8 @@
                         <select class="form-control" name="unit_id" id="units">
                             <option value="">Select Product Unit</option>
                             @foreach ($units as $id => $value)
-                                <option value="{{ $id }}">{{ $value }}
+                                <option value="{{ $id }}" {{ $id == $product->unit_id ? 'selected' : '' }}>
+                                    {{ $value }}
                                 </option>
                             @endforeach
                         </select>
@@ -65,11 +66,21 @@
                     <div class="form-group">
                         <label for="exampleSelectGender">Purchase Unit</label>
                         <select id="purchase-units" class="form-control" name="purchase_unit_id">
+                            @foreach ($units as $id => $value)
+                                <option value="{{ $id }}" {{ $id == $product->purchase_unit_id ? 'selected' : '' }}>
+                                    {{ $value }}
+                                </option>
+                            @endforeach
                         </select>
                     </div>
                     <div class="form-group">
                         <label for="exampleSelectGender">Sale Unit</label>
                         <select id="sale-units" class="form-control" name="sale_unit_id">
+                            @foreach ($units as $id => $value)
+                                <option value="{{ $id }}" {{ $id == $product->sale_unit_id ? 'selected' : '' }}>
+                                    {{ $value }}
+                                </option>
+                            @endforeach
                         </select>
                     </div>
                     <div class="form-group">
@@ -108,13 +119,12 @@
                         <label for="exampleSelectGender">Status</label>
                         <select class="form-control" id="status" name="status">
                             <option value="">Select a status</option>
-
                             <option value="0"
-                                @isset($brand) {{ $brand->status == 0 ? 'selected=true' : '' }} @endisset>
+                                @isset($product) {{ $product->status == 0 ? 'selected=true' : '' }} @endisset>
                                 Active
                             </option>
                             <option value="1"
-                                @isset($brand) {{ $brand->status ? 'selected=true' : '' }} @endisset>
+                                @isset($product) {{ $product->status ? 'selected=true' : '' }} @endisset>
                                 Inactive
                             </option>
                         </select>
