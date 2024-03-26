@@ -21,6 +21,7 @@ use App\Http\Controllers\Admin\{
     AdminController,
     AdmindashboardController,
     CartController,
+    OrderController,
     SocialLinkController,
     ProductController,
 };
@@ -55,9 +56,10 @@ Route::post("blogs/search", [FrontController::class, 'searchBlog'])->name('blogs
 Route::post('contact/us', [ContactUsController::class, 'store'])->name('contact.store');
 Route::post('subscribes/create', [NewsLetterController::class, 'store'])->name('subscribe.store');
 
+Route::get('category/{category}/products', [CategoryController::class, 'show'])->name('category.products.show');
 Route::get('product/details/{product}', [FrontController::class, 'singleProduct'])->name('product.details');
 Route::get('products', [FrontController::class, 'product'])->name('products');
-Route::resource('cart', CartController::class);
+
 
 
 // Route::get('/admin/dashboard', function () {
@@ -75,8 +77,14 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::get('my/account', [FrontController::class, 'myAccount'])->name('my.account');
+    Route::resource('cart', CartController::class);
+    Route::get('checkout', [FrontController::class, 'checkout'])->name('checkout');
 
+    Route::get('/admin/orders', [OrderController::class, 'index'])->name('admin.orders.index');
+    Route::put('/admin/orders/{order}', [OrderController::class, 'updateStatus'])->name('update.order.status');
+    Route::get('/admin/orders/{order}/show', [OrderController::class, 'show'])->name('admin.orders.show');
 
+    Route::post('checkout', [OrderController::class, 'store'])->name('orders.store');
 
     // Blog
     Route::resource('admin/blogs', BlogController::class);
@@ -101,6 +109,7 @@ Route::middleware('auth')->group(function () {
     Route::resource('admin/discounts', DiscountController::class);
     // Category
     Route::resource('admin/categories', CategoryController::class);
+
     // Subcategory
     Route::get('admin/subcategories', SubcategoryController::class)->name('admin.subcategories.index');
     // Brand
@@ -115,15 +124,16 @@ Route::middleware('auth')->group(function () {
     // Products
     Route::resource('admin/products', ProductController::class);
     Route::post('admin/products/fetch-purchase-units', [ProductController::class, 'fetchPurcahseUnit']);
+
     // Route::post('admin/products/fetch-sale-units', [ProductController::class, 'fetchSaleUnit']);
+
 });
 
 
-Route::middleware(['auth','admin'])->group(function () {
+Route::middleware(['auth', 'admin'])->group(function () {
     // all admin and super admin routes should be written here
 
     Route::get('/admin/dashboard', [AdmindashboardController::class, 'index'])->name('admin.dashboard');
-
 });
 
 require __DIR__ . '/auth.php';

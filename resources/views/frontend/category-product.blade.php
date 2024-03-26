@@ -37,7 +37,7 @@
                             title="List"></button>
                     </div>
                     <div class=" niceselect_option">
-                        <form class="select_option" action="#">
+                        {{-- <form class="select_option" action="#">
                             <select name="orderby" id="short">
 
                                 <option selected value="1">Sort by average rating</option>
@@ -47,11 +47,11 @@
                                 <option value="5">Sort by price: high to low</option>
                                 <option value="6">Product Name: Z</option>
                             </select>
-                        </form>
+                        </form> --}}
                     </div>
-                    <div class="page_amount">
+                    {{-- <div class="page_amount">
                         <p>Showing 1–9 of 21 results</p>
-                    </div>
+                    </div> --}}
                 </div>
                 <!--shop toolbar end-->
                 <div class="row shop_wrapper">
@@ -72,17 +72,6 @@
                                         <li class="add_to_cart"><a href="{{ route('product.details', $product->id) }}" data-tippy="Add to cart"
                                                 data-tippy-placement="top" data-tippy-arrow="true"
                                                 data-tippy-inertia="true"> <span class="lnr lnr-cart"></span></a></li>
-                                        {{-- <li class="quick_button"><a href="#" data-tippy="quick view"
-                                                data-tippy-placement="top" data-tippy-arrow="true"
-                                                data-tippy-inertia="true" data-bs-toggle="modal"
-                                                data-bs-target="#modal_box"> <span class="lnr lnr-magnifier"></span></a>
-                                        </li> --}}
-                                        {{-- <li class="wishlist"><a href="wishlist.html" data-tippy="Add to Wishlist"
-                                                data-tippy-placement="top" data-tippy-arrow="true"
-                                                data-tippy-inertia="true"><span class="lnr lnr-heart"></span></a></li>
-                                        <li class="compare"><a href="#" data-tippy="Add to Compare"
-                                                data-tippy-placement="top" data-tippy-arrow="true"
-                                                data-tippy-inertia="true"><span class="lnr lnr-sync"></span></a></li> --}}
                                     </ul>
                                 </div>
                             </div>
@@ -91,7 +80,6 @@
                                 <p><a href="#">{{ $product->category->name }}</a></p>
                                 <div class="price_box">
                                     <span class="current_price">BDT&nbsp;{{ $product->purchase_price }}.00</span>
-                                    {{-- <span class="old_price">$362.00</span> --}}
                                 </div>
                             </div>
                             <div class="product_content list_content">
@@ -99,7 +87,6 @@
                                 <p><a href="#">{{ $product->category->name }}</a></p>
                                 <div class="price_box">
                                     <span class="current_price">BDT&nbsp;{{ $product->purchase_price }}.00</span>
-                                    {{-- <span class="old_price">$362.00</span> --}}
                                 </div>
                                 <div class="product_desc">
                                     <p>{{$product->details}}</p>
@@ -108,17 +95,6 @@
                                     <ul>
                                         <li class="add_to_cart"><a href="{{ route('product.details', $product->id) }}" title="Add to cart">Add to
                                                 Cart</a></li>
-                                        {{-- <li class="quick_button"><a href="#" data-tippy="quick view"
-                                                data-tippy-placement="top" data-tippy-arrow="true"
-                                                data-tippy-inertia="true" data-bs-toggle="modal"
-                                                data-bs-target="#modal_box"> <span
-                                                    class="lnr lnr-magnifier"></span></a></li>
-                                        <li class="wishlist"><a href="wishlist.html" data-tippy="Add to Wishlist"
-                                                data-tippy-placement="top" data-tippy-arrow="true"
-                                                data-tippy-inertia="true"><span class="lnr lnr-heart"></span></a></li>
-                                        <li class="compare"><a href="#" data-tippy="Add to Compare"
-                                                data-tippy-placement="top" data-tippy-arrow="true"
-                                                data-tippy-inertia="true"><span class="lnr lnr-sync"></span></a></li> --}}
                                     </ul>
                                 </div>
                             </div>
@@ -978,20 +954,6 @@
                     </div>
                     @endforelse
                 </div>
-
-                {{-- <div class="shop_toolbar t_bottom">
-                    <div class="pagination">
-                        <ul>
-                            <li class="current">1</li>
-                            <li><a href="#">2</a></li>
-                            <li><a href="#">3</a></li>
-                            <li class="next"><a href="#">next</a></li>
-                            <li><a href="#">>></a></li>
-                        </ul>
-                    </div>
-                </div> --}}
-                <!--shop toolbar end-->
-                <!--shop wrapper end-->
             </div>
         </div>
     </div>

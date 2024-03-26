@@ -87,22 +87,23 @@
                     <div class="col-lg-6 col-md-6">
                         <div class="language_currency">
                             <ul>
-                                <li class="language"><a href="#"> Language <i
-                                            class="icon-right ion-ios-arrow-down"></i></a>
-                                    <ul class="dropdown_language">
+                                <li class="language"><a href="#"> Connect with our social platform
+                                    {{-- <i class="icon-right ion-ios-arrow-down"></i> --}}
+                                        </a>
+                                    {{-- <ul class="dropdown_language">
                                         <li><a href="#">French</a></li>
                                         <li><a href="#">Spanish</a></li>
                                         <li><a href="#">Russian</a></li>
-                                    </ul>
+                                    </ul> --}}
                                 </li>
-                                <li class="currency"><a href="#"> Currency <i
+                                {{-- <li class="currency"><a href="#"> Currency <i
                                             class="icon-right ion-ios-arrow-down"></i></a>
                                     <ul class="dropdown_currency">
                                         <li><a href="#">€ Euro</a></li>
                                         <li><a href="#">£ Pound Sterling</a></li>
                                         <li><a href="#">$ US Dollar</a></li>
                                     </ul>
-                                </li>
+                                </li> --}}
                             </ul>
                         </div>
                     </div>
@@ -135,7 +136,7 @@
                     </div>
                     <div class="col-lg-10 col-md-6 col-sm-7 col-8">
                         <div class="header_right_info">
-                            <div class="search_container mobail_s_none">
+                            {{-- <div class="search_container mobail_s_none">
                                 <form action="#">
                                     <div class="hover_category">
                                         <select class="select_option" name="select" id="categori2">
@@ -162,7 +163,7 @@
                                         <button type="submit"><span class="lnr lnr-magnifier"></span></button>
                                     </div>
                                 </form>
-                            </div>
+                            </div> --}}
                             <div class="header_account_area">
                                 <div class="header_account_list register">
                                     <ul>
@@ -184,15 +185,17 @@
                                         @endif
                                     </ul>
                                 </div>
-                                <div class="header_account_list header_wishlist">
+                                {{-- <div class="header_account_list header_wishlist">
                                     <a href="wishlist.html"><span class="lnr lnr-heart"></span> <span
                                             class="item_count">3</span> </a>
-                                </div>
+                                </div> --}}
                                 <div class="header_account_list  mini_cart_wrapper">
-                                    <a href="javascript:void(0)"><span class="lnr lnr-cart"></span><span
-                                            class="item_count">2</span></a>
+                                    <a href="{{ route('cart.index') }}">
+                                        <span class="lnr lnr-cart"></span>
+                                        <span class="item_count">{{ isset($carts) ? count($carts) : '0' }}</span>
+                                    </a>
                                     <!--mini cart-->
-                                    <div class="mini_cart">
+                                    {{-- <div class="mini_cart">
                                         <div class="cart_gallery">
                                             <div class="cart_close">
                                                 <div class="cart_text">
@@ -253,7 +256,7 @@
                                             </div>
 
                                         </div>
-                                    </div>
+                                    </div> --}}
                                     <!--mini cart end-->
                                 </div>
                             </div>
@@ -266,7 +269,7 @@
         <div class="header_bottom sticky-header">
             <div class="container">
                 <div class="row align-items-center">
-                    <div class="col-12 col-md-6 mobail_s_block">
+                    {{-- <div class="col-12 col-md-6 mobail_s_block">
                         <div class="search_container">
                             <form action="#">
                                 <div class="hover_category">
@@ -295,7 +298,8 @@
                                 </div>
                             </form>
                         </div>
-                    </div>
+                    </div> --}}
+                    {{-- @dump($categories) --}}
                     <div class="col-lg-3 col-md-6">
                         <div class="categories_menu">
                             <div class="categories_title">
@@ -303,9 +307,10 @@
                             </div>
                             <div class="categories_menu_toggle">
                                 <ul>
-                                    <li class="menu_item_children"><a href="#">Vegetables<i
-                                                class="fa fa-angle-right"></i></a>
-                                        <ul class="categories_mega_menu">
+                                    @forelse ($categories as $category)
+
+                                    <li class="menu_item_children"><a href="{{ route('category.products.show', $category->id) }}">{{ $category->name }}</a>
+                                        {{-- <ul class="categories_mega_menu">
                                             <li class="menu_item_children"><a href="#">Dresses</a>
                                                 <ul class="categorie_sub_menu">
                                                     <li><a href="#">Sweater</a></li>
@@ -338,9 +343,12 @@
                                                     <li><a href="#">T-shirts</a></li>
                                                 </ul>
                                             </li>
-                                        </ul>
+                                        </ul> --}}
                                     </li>
-                                    <li class="menu_item_children"><a href="#">Fruits <i
+                                    @empty
+                                    <li><a href="#"> Oil</a></li>
+                                    @endforelse
+                                    {{-- <li class="menu_item_children"><a href="#">Fruits <i
                                                 class="fa fa-angle-right"></i></a>
                                         <ul class="categories_mega_menu column_3">
                                             <li class="menu_item_children"><a href="#">Chair</a>
@@ -410,8 +418,8 @@
                                                 </ul>
                                             </li>
                                         </ul>
-                                    </li>
-                                    <li><a href="#"> Fresh Meat</a></li>
+                                    </li> --}}
+                                    {{-- <li><a href="#"> Fresh Meat</a></li>
                                     <li><a href="#"> Butter & Eggs</a></li>
                                     <li><a href="#">Milk</a></li>
                                     <li><a href="#">Oil & Vinegars</a></li>
@@ -421,7 +429,7 @@
                                     <li class="hidden"><a href="shop.html">New Sofas</a></li>
                                     <li class="hidden"><a href="shop.html">Sleight Sofas</a></li>
                                     <li><a href="#" id="more-btn"><i class="fa fa-plus"
-                                                aria-hidden="true"></i> More Categories</a></li>
+                                                aria-hidden="true"></i> More Categories</a></li> --}}
                                 </ul>
                             </div>
                         </div>
@@ -434,64 +442,16 @@
                                     <li>
                                         <a class="active" href="{{ route('home') }}">Home</a>
                                     </li>
-                                    {{-- <li class="mega_items"><a href="shop.html">shop<i
-                                                class="fa fa-angle-down"></i></a>
-                                        <div class="mega_menu">
-                                            <ul class="mega_menu_inner">
-                                                <li><a href="#">Shop Layouts</a>
-                                                    <ul>
-                                                        <li><a href="shop-fullwidth.html">Full Width</a></li>
-                                                        <li><a href="shop-fullwidth-list.html">Full Width list</a>
-                                                        </li>
-                                                        <li><a href="shop-right-sidebar.html">Right Sidebar </a>
-                                                        </li>
-                                                        <li><a href="shop-right-sidebar-list.html"> Right Sidebar
-                                                                list</a></li>
-                                                        <li><a href="shop-list.html">List View</a></li>
-                                                    </ul>
-                                                </li>
-                                                <li><a href="#">other Pages</a>
-                                                    <ul>
-                                                        <li><a href="cart.html">cart</a></li>
-                                                        <li><a href="wishlist.html">Wishlist</a></li>
-                                                        <li><a href="checkout.html">Checkout</a></li>
-                                                        <li><a href="my-account.html">my account</a></li>
-                                                        <li><a href="404.html">Error 404</a></li>
-                                                    </ul>
-                                                </li>
-                                                <li><a href="#">Product Types</a>
-                                                    <ul>
-                                                        <li><a href="product-details.html">product details</a></li>
-                                                        <li><a href="product-sidebar.html">product sidebar</a></li>
-                                                        <li><a href="product-grouped.html">product grouped</a></li>
-                                                        <li><a href="variable-product.html">product variable</a>
-                                                        </li>
-
-                                                    </ul>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </li> --}}
-                                    {{-- <li><a href="blog.html">blog<i class="fa fa-angle-down"></i></a>
+                                    <li><a href="{{ route('products') }}"> e-Store</a></li>
+                                    <li><a href="{{ route('aboutus') }}"> About Us</a></li>
+                                    <li><a href="{{ route('blog.index') }}"> Blogs</a></li>
+                                    <li><a href="{{ route('contactus') }}"> Contact</a></li>
+                                    <li><a href="#">More <i class="fa fa-angle-down"></i></a>
                                         <ul class="sub_menu pages">
-                                            <li><a href="blog-details.html">blog details</a></li>
-                                            <li><a href="blog-fullwidth.html">blog fullwidth</a></li>
-                                            <li><a href="blog-sidebar.html">blog sidebar</a></li>
-                                        </ul>
-                                    </li> --}}
-                                    <li><a href="#">pages <i class="fa fa-angle-down"></i></a>
-                                        <ul class="sub_menu pages">
-                                            <li><a href="{{ route('aboutus') }}">About Us</a></li>
-                                            {{-- <li><a href="services.html">services</a></li> --}}
-                                            {{-- <li><a href="faq.html">Frequently Questions</a></li> --}}
-                                            <li><a href="{{ route('contactus') }}">Contact</a></li>
-                                            <li><a href="{{ route('blog.index') }}">Blogs</a></li>
-                                            <li><a href="{{ route('products') }}">Products</a></li>
-                                            {{-- <li><a href="login.html">login</a></li> --}}
-                                            {{-- <li><a href="404.html">Error 404</a></li> --}}
+                                            <li><a href="#"> Event</a></li>
+                                            <li><a href="{{ route('products') }}"> Products</a></li>
                                         </ul>
                                     </li>
-                                    <li><a href="{{ route('contactus') }}"> Contact Us</a></li>
                                 </ul>
                             </nav>
                         </div>

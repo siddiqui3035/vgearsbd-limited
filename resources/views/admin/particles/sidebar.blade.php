@@ -85,7 +85,7 @@
                     <li class="nav-item"> <a class="nav-link" href="{{ route('admin.subcategories.index') }}"> Sub Categories </a></li>
                     <li class="nav-item"> <a class="nav-link" href="{{ route('brands.index') }}">Brands</a></li>
                     <li class="nav-item"> <a class="nav-link" href="{{ route('products.index') }}"> Products </a></li>
-                    <li class="nav-item"> <a class="nav-link" href="#"> Orders </a></li>
+                    <li class="nav-item"> <a class="nav-link" href="{{ route('admin.orders.index') }}"> Orders </a></li>
                     <li class="nav-item"> <a class="nav-link" href="{{ route('units.index') }}"> Units </a></li>
                     <li class="nav-item"> <a class="nav-link" href="{{ route('discounts.index') }}"> Discounts </a></li>
                     <li class="nav-item"> <a class="nav-link" href="{{ route('teams.index') }}">Team Members</a></li>

@@ -82,4 +82,14 @@ class User extends Authenticatable
             get: fn ($value) => $value != '' ? asset('storage/'.$value) : '',
         );
     }
+
+    public function orders()
+    {
+        return $this->hasMany(Order::class);
+    }
+
+    public function getFullNameAttribute(): string
+    {
+        return sprintf("%s %s", $this->first_name, $this->last_name);
+    }
 }

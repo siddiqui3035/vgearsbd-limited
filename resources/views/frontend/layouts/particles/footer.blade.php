@@ -92,12 +92,12 @@
                         <div class="footer_menu">
 
                             <ul>
-                                <li><a href="about.html">About Us</a></li>
-                                <li><a href="#">Delivery Information</a></li>
+                                <li><a href="{{ route('aboutus') }}">About Us</a></li>
+                                {{-- <li><a href="#">Delivery Information</a></li> --}}
                                 <li><a href="#"> Privacy Policy</a></li>
                                 <li><a href="#"> Terms & Conditions</a></li>
-                                <li><a href="contact.html"> Contact Us</a></li>
-                                <li><a href="#"> Site Map</a></li>
+                                <li><a href="{{ route('contactus') }}"> Contact Us</a></li>
+                                {{-- <li><a href="#"> Site Map</a></li> --}}
                             </ul>
                         </div>
                     </div>
@@ -107,12 +107,12 @@
                         <h3>Extras</h3>
                         <div class="footer_menu">
                             <ul>
-                                <li><a href="#">Brands</a></li>
-                                <li><a href="#"> Gift Certificates</a></li>
-                                <li><a href="#">Affiliate</a></li>
-                                <li><a href="#">Specials</a></li>
-                                <li><a href="#">Returns</a></li>
-                                <li><a href="#"> Order History</a></li>
+                                <li><a href="{{ route('products') }}">Products</a></li>
+                                <li><a href="{{ route('blog.index') }}"> Blogs</a></li>
+                                <li><a href="#">Event</a></li>
+                                <li><a href="{{ route('products') }}">eStore</a></li>
+                                {{-- <li><a href="#">Returns</a></li> --}}
+                                {{-- <li><a href="#"> Order History</a></li> --}}
                             </ul>
                         </div>
                     </div>
@@ -153,14 +153,14 @@
                 <div class="col-lg-6 col-md-5">
                     <div class="footer_payment">
                         <ul>
-                            <li><a href="#"><img src="{{ asset('front-asset/assets/img/icon/paypal1.jpg') }}" alt=""></a>
+                            {{-- <li><a href="#"><img src="{{ asset('front-asset/assets/img/icon/paypal1.jpg') }}" alt=""></a>
                             </li>
                             <li><a href="#"><img src="{{ asset('front-asset/assets/img/icon/paypal2.jpg') }}" alt=""></a>
                             </li>
                             <li><a href="#"><img src="{{ asset('front-asset/assets/img/icon/paypal3.jpg') }}" alt=""></a>
                             </li>
                             <li><a href="#"><img src="{{ asset('front-asset/assets/img/icon/paypal4.jpg') }}" alt=""></a>
-                            </li>
+                            </li> --}}
                         </ul>
                     </div>
                 </div>

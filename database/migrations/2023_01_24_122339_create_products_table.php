@@ -21,7 +21,8 @@ return new class extends Migration
             $table->string('purchase_price');
             $table->string('sale_price');
             $table->string('product_code');
-            $table->boolean('packaging_type')->comment('0 = container', '1 = can', '2 = bottol', '3 = others');
+            $table->boolean('packaging_type')
+                ->comment('0 = container', '1 = can, 2 = bottol, 3 = others');
             $table->integer('qty');
             $table->text('details');
             $table->string('thumble')->nullable();

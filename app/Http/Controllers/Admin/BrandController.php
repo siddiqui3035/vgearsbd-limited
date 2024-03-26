@@ -40,12 +40,12 @@ class BrandController extends Controller
                 $params['image'] = app(FileUploadService::class)
                     ->upload($request->file('image'), $filePath, $fileName, '', '', 'public');
                 if (!$params['image']) {
-                    throw new RuntimeException(__('Failed to upload image.'));
+                    throw new Exception(__('Failed to upload image.'));
                 }
             }
 
             if (!Brand::create($params)) {
-                throw new RuntimeException(__('Failed to create brand.'));
+                throw new Exception(__('Failed to create brand.'));
             }
         } catch (Exception $e) {
             logs()->error($e);
