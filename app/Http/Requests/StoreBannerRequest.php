@@ -34,7 +34,8 @@ class StoreBannerRequest extends FormRequest
                 'nullable'
             ],
             'image' => [
-                'required'
+                'required',
+                'image'
             ],
         ];
     }

@@ -39,9 +39,14 @@
                         <form action="{{ route('register') }}" method="post">
                             @csrf
                             <p>
-                                <label>Full Name <span>*</span></label>
-                                <input type="text" name="name" id="name" required autofocus>
-                                <x-input-error :messages="$errors->get('name')" class="mt-2" />
+                                <label>Fisrt Name <span>*</span></label>
+                                <input type="text" name="first_name" id="first_name" required autofocus>
+                                <x-input-error :messages="$errors->get('first_name')" class="mt-2" />
+                            </p>
+                            <p>
+                                <label>Last Name <span>*</span></label>
+                                <input type="text" name="last_name" id="last_name" required autofocus>
+                                <x-input-error :messages="$errors->get('last_name')" class="mt-2" />
                             </p>
                             <p>
                                 <label>Email address <span>*</span></label>
