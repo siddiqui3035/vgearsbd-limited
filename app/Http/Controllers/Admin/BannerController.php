@@ -74,25 +74,6 @@ class BannerController extends Controller
 
     public function update(UpdateBannerRequest $request, Banner $banner)
     {
-        // $data = $request->validated();
-
-        // if ($request->hasFile('image')) {
-        //     if ($banner->image) {
-        //         Storage::delete($banner->image);
-        //     }
-        //     $data['image'] = $request->file('image')->store('images/banners');
-        // }
-
-        // if (empty($banner->update($data))) {
-        //     Alert::error('Error', 'Something wrong!');
-        //     return redirect()
-        //         ->back()
-        //         ->withInput();
-        //     // return redirect()->route('banners.index')->with('SUCCESS', 'Banner Updated');
-        // }
-
-        // // return redirect()->back()->withInput()->with('ERROR', 'Something Wrong!');
-
         try {
             $params = $request->only(['name']);
             if ($request->hasFile('image')) {

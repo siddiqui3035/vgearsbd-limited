@@ -25,7 +25,7 @@ class StoreAboutVgearRequest extends FormRequest
     {
         return [
             'title' => 'required',
-            'details' => 'required',
+            'details' => 'nullable',
         ];
     }
 }

@@ -102,6 +102,11 @@ class BrandController extends Controller
 
     public function destroy(Brand $brand)
     {
+        if ($brand->products()->exists() || $brand->otherRelatedModels()->exists()) {
+            Alert::error('Error', 'Branch is in use and cannot be deleted.');
+            return redirect()->back();
+        }
+
         if($brand->image){
             Storage::delete($brand->image);
         }

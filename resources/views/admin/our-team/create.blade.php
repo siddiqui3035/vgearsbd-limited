@@ -6,7 +6,6 @@
                     <h4 class="card-title">Create Team</h4>
                     <a class="menu-icon" href="{{ route('teams.index') }}">
                         <i class="mdi mdi-format-list-bulleted"><span>Back to list</span></i>
-
                     </a>
                 </div>
                 <form class="forms-sample" action="{{ route('teams.store') }}" method="post" enctype="multipart/form-data">
@@ -14,25 +13,21 @@
                     <div class="form-group">
                         <label for="exampleInputName1">Name</label>
                         <input type="text" name="name" class="form-control" id="name" placeholder="Enter member's name">
+                        <p class="text-danger mt-2">{{ $errors->first('name') }}</p>
                     </div>
                     <div class="form-group">
                         <label for="exampleInputEmail3">Degnigation</label>
                         <input type="text" name="degnigation" class="form-control" id="degnigation" placeholder="Enter menber degnigation">
+                        <p class="text-danger mt-2">{{ $errors->first('degnigation') }}</p>
                     </div>
                     <div class="form-group">
                         <label for="exampleTextarea1">Details</label>
                         <textarea class="form-control" name="details" id="details" rows="4"></textarea>
+                        <p class="text-danger mt-2">{{ $errors->first('details') }}</p>
                     </div>
                     <label>Image upload</label>
                     <div class="form-group">
                         <input type="file" name="image" id="image">
-                        {{-- <div class="input-group col-xs-12">
-                            <input type="text" class="form-control file-upload-info" disabled=""
-                                placeholder="Upload Image">
-                            <span class="input-group-append">
-                                <button class="file-upload-browse btn btn-primary" type="button">Upload</button>
-                            </span>
-                        </div> --}}
                     </div>
                     <button type="submit" class="btn btn-primary mr-2">Submit</button>
                     <button class="btn btn-dark">Cancel</button>

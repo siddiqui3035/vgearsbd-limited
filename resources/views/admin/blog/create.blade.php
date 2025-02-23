@@ -14,10 +14,12 @@
                     <div class="form-group">
                         <label for="exampleInputName1">Category</label>
                         <input type="text" name="category" class="form-control" id="category" placeholder="Enter acategory">
+                        <p class="text-danger mt-2">{{ $errors->first('category') }}</p>
                     </div>
                     <div class="form-group">
                         <label for="exampleInputEmail3">Title</label>
                         <input type="text" name="title" class="form-control" id="title" placeholder="Enter a title">
+                        <p class="text-danger mt-2">{{ $errors->first('title') }}</p>
                     </div>
                     <div class="form-group">
                         <label for="exampleInputPassword4">Short Details</label>
@@ -26,17 +28,11 @@
                     <div class="form-group">
                         <label for="exampleTextarea1">Details</label>
                         <textarea class="form-control" name="long_description" id="long_description" rows="4"></textarea>
+                        <p class="text-danger mt-2">{{ $errors->first('long_description') }}</p>
                     </div>
                     <label>Image upload</label>
                     <div class="form-group">
                         <input type="file" name="image" id="image">
-                        {{-- <div class="input-group col-xs-12">
-                            <input type="text" class="form-control file-upload-info" disabled=""
-                                placeholder="Upload Image">
-                            <span class="input-group-append">
-                                <button class="file-upload-browse btn btn-primary" type="button">Upload</button>
-                            </span>
-                        </div> --}}
                     </div>
                     <button type="submit" class="btn btn-primary mr-2">Submit</button>
                     <button class="btn btn-dark">Cancel</button>

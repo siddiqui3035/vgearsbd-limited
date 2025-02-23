@@ -15,16 +15,16 @@
                         <label for="exampleInputName1">Name</label>
                         <input type="text" name="name" class="form-control" id="name"
                             placeholder="Enter a unit name">
+                        <p class="text-danger mt-2">{{ $errors->first('name') }}</p>
                     </div>
                     <div class="form-group">
                         <label for="exampleSelectGender">Short name</label>
                         <input type="text" name="short_name" class="form-control" id="short_name"
                             placeholder="Enter a unit short name">
+                        <p class="text-danger mt-2">{{ $errors->first('short_name') }}</p>
                     </div>
                     <div class="form-group">
                         <label for="exampleSelectGender">Unit type</label>
-                        {{-- <input type="text" name="unit_type" class="form-control"
-                            id="unit_type" placeholder="Enter a unit type"> --}}
                         <select class="form-control" id="unit_type" name="unit_type">
                             <option value="">Select a unit type</option>
                             <option value="kilogram">
@@ -37,11 +37,10 @@
                                 Piece
                             </option>
                         </select>
+                        <p class="text-danger mt-2">{{ $errors->first('unit_type') }}</p>
                     </div>
                     <div class="form-group">
                         <label for="exampleSelectGender">Operator</label>
-                        {{-- <input type="text" name="operator" class="form-control" id="operator"
-                            placeholder="Enter a unit operator"> --}}
                         <select class="form-control" id="operator" name="operator">
                             <option value="">Select a operator</option>
                             <option value="*">
@@ -51,11 +50,13 @@
                                 /
                             </option>
                         </select>
+                        <p class="text-danger mt-2">{{ $errors->first('operator') }}</p>
                     </div>
                     <div class="form-group">
                         <label for="exampleSelectGender">Operator value</label>
                         <input type="number" name="operator_value" class="form-control" id="operator_value"
                             placeholder="Enter a unit operator value">
+                        <p class="text-danger mt-2">{{ $errors->first('operator_value') }}</p>
                     </div>
                     <button type="submit" class="btn btn-primary mr-2">Submit</button>
                     <a href="{{ route('units.index') }}" class="btn btn-dark">Cancel</a>

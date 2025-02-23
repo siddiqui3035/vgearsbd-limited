@@ -81,21 +81,21 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            @forelse ($orders as $order )
-                                            <tr>
-                                                <td>{{ $order->order_number }}</td>
-                                                <td>{{ $order->product->name }}</td>
-                                                <td>{{ $order->product_qty }}</td>
-                                                <td>{{ $order->created_at->format('d m Y') }}</td>
-                                                <td><span class="success">{{ $order->status }}</span></td>
-                                                <td>{{ $order->total_price }}</td>
-                                                {{-- <td><a href="cart.html" class="view">view</a></td> --}}
-                                            </tr>
+                                            @forelse ($orders as $order)
+                                                <tr>
+                                                    <td>{{ $order->order_number }}</td>
+                                                    <td>{{ $order->product->name }}</td>
+                                                    <td>{{ $order->product_qty }}</td>
+                                                    <td>{{ $order->created_at->format('d m Y') }}</td>
+                                                    <td><span class="success">{{ $order->status }}</span></td>
+                                                    <td>{{ $order->total_price }}</td>
+                                                    {{-- <td><a href="cart.html" class="view">view</a></td> --}}
+                                                </tr>
                                             @empty
 
-                                            <tr>
-                                                <h2>No order found</h2>
-                                            </tr>
+                                                <tr>
+                                                    <h2>No order found</h2>
+                                                </tr>
                                             @endforelse
                                         </tbody>
                                     </table>
@@ -114,35 +114,39 @@
                                         </thead>
                                         <tbody>
                                             @forelse ($socialLinks as $socialLink)
-                                            <tr>
-                                                <td>{{ $socialLink->type }}</td>
-                                                <td><a href="{{ $socialLink->link }}">{{ $socialLink->link }}</a></td>
-                                                <td>
-                                                    <a class="menu-icon text-success" href="{{ route('sociallinks.edit', $socialLink->id) }}">
-                                                        Edit
-                                                    </a>
-                                                    |
-                                                    <a class="menu-icon delete-row text-danger" href="{{ route('sociallinks.destroy', $socialLink->id) }}" data-confirm="Are you sure to delete this?">
-                                                        Delete
-                                                    </a>
+                                                <tr>
+                                                    <td>{{ $socialLink->type }}</td>
+                                                    <td><a href="{{ $socialLink->link }}">{{ $socialLink->link }}</a>
+                                                    </td>
+                                                    <td>
+                                                        <a class="menu-icon text-success"
+                                                            href="{{ route('sociallinks.edit', $socialLink->id) }}">
+                                                            Edit
+                                                        </a>
+                                                        |
+                                                        <a class="menu-icon delete-row text-danger"
+                                                            href="{{ route('sociallinks.destroy', $socialLink->id) }}"
+                                                            data-confirm="Are you sure to delete this?">
+                                                            Delete
+                                                        </a>
 
-                                                </td>
-                                            </tr>
+                                                    </td>
+                                                </tr>
                                             @empty
-                                            <tr>
-                                                <td>Shopnovilla - Free Real Estate PSD Template</td>
-                                                <td>May 10, 2018</td>
-                                                <td><span class="danger">Expired</span></td>
-                                                <td><a href="#" class="view">Click Here To Download Your
-                                                        File</a></td>
-                                            </tr>
-                                            <tr>
-                                                <td>Organic - ecommerce html template</td>
-                                                <td>Sep 11, 2018</td>
-                                                <td>Never</td>
-                                                <td><a href="#" class="view">Click Here To Download Your
-                                                        File</a></td>
-                                            </tr>
+                                                <tr>
+                                                    <td>Shopnovilla - Free Real Estate PSD Template</td>
+                                                    <td>May 10, 2018</td>
+                                                    <td><span class="danger">Expired</span></td>
+                                                    <td><a href="#" class="view">Click Here To Download Your
+                                                            File</a></td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Organic - ecommerce html template</td>
+                                                    <td>Sep 11, 2018</td>
+                                                    <td>Never</td>
+                                                    <td><a href="#" class="view">Click Here To Download Your
+                                                            File</a></td>
+                                                </tr>
                                             @endforelse
                                         </tbody>
                                     </table>
@@ -168,8 +172,10 @@
                                                     Linkedin
                                                 </option>
                                             </select>
+                                            <p class="text-danger mt-2">{{ $errors->first('type') }}</p>
                                             <label class="mt-4">Social Link</label>
                                             <input type="text" name="link" id="link">
+                                            <p class="text-danger mt-2">{{ $errors->first('link') }}</p>
                                             <div class="save_button primary_btn default_button">
                                                 <button type="submit">Save</button>
                                             </div>
@@ -208,12 +214,16 @@
                                                 @csrf
                                                 <label>Address</label>
                                                 <input type="text" name="address">
+                                                <p class="text-danger mt-2">{{ $errors->first('address') }}</p>
                                                 <label>City</label>
                                                 <input type="text" name="city">
+                                                <p class="text-danger mt-2">{{ $errors->first('city') }}</p>
                                                 <label>Country</label>
                                                 <input type="text" name="country">
+                                                <p class="text-danger mt-2">{{ $errors->first('country') }}</p>
                                                 <label>Post Code</label>
                                                 <input type="text" name="postal_code">
+                                                <p class="text-danger mt-2">{{ $errors->first('postal_code') }}</p>
                                                 <div class="save_button primary_btn default_button">
                                                     <button type="submit">Save</button>
                                                 </div>
@@ -259,12 +269,17 @@
                                                 <label>Current Password</label>
                                                 <input type="password" name="current_password" id="current_password"
                                                     autocomplete="current-password">
+                                                <p class="text-danger mt-2">{{ $errors->first('current_password') }}
+                                                </p>
                                                 <label>Password</label>
                                                 <input type="password" name="password" id="password"
                                                     autocomplete="new-password">
+                                                <p class="text-danger mt-2">{{ $errors->first('password') }}</p>
                                                 <label>Confirm Password</label>
                                                 <input type="password" name="password_confirmation"
                                                     autocomplete="new-password">
+                                                <p class="text-danger mt-2">
+                                                    {{ $errors->first('password_confirmation') }}</p>
                                                 <div class="save_button primary_btn default_button">
                                                     <button type="submit">Save</button>
                                                 </div>

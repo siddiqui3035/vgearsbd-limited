@@ -46,12 +46,16 @@
                                         @method('PUT')
                                         <label>Address</label>
                                         <input type="text" name="address" value="{{ $address->address }}">
+                                        <p class="text-danger mt-2">{{ $errors->first('address') }}</p>
                                         <label>City</label>
                                         <input type="text" name="city" value="{{ $address->city }}">
+                                        <p class="text-danger mt-2">{{ $errors->first('city') }}</p>
                                         <label>Country</label>
                                         <input type="text" name="country" value="{{ $address->country }}">
+                                        <p class="text-danger mt-2">{{ $errors->first('country') }}</p>
                                         <label>Post Code</label>
                                         <input type="text" name="postal_code" value="{{ $address->postal_code }}">
+                                        <p class="text-danger mt-2">{{ $errors->first('postal_code') }}</p>
                                         <div class="save_button primary_btn default_button">
                                             <button type="submit">Save</button>
                                         </div>

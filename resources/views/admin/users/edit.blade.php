@@ -16,30 +16,36 @@
                         <label for="exampleInputEmail3">Title</label>
                         <input type="text" name="title" value="{{ $about->title }}" class="form-control"
                             id="title" placeholder="Enter a title">
+                        <p class="text-danger mt-2">{{ $errors->first('title') }}</p>
                     </div>
                     <div class="form-group">
                         <label for="exampleTextarea1">Details</label>
                         <textarea class="form-control text-white" name="details" id="details" rows="4">
                             {{ $about->details }}
                         </textarea>
+                        <p class="text-danger mt-2">{{ $errors->first('details') }}</p>
                     </div>
                     <div class="form-group">
                         <label for="exampleSelectGender">Status</label>
                         <select class="form-control" id="status" name="status">
                             <option value="">Select a status</option>
 
-                            <option value="0" @isset($about) {{ $about->status == 0 ? "selected=true" : "" }} @endisset>
+                            <option value="0"
+                                @isset($about) {{ $about->status == 0 ? 'selected=true' : '' }} @endisset>
                                 Active
                             </option>
-                            <option value="1" @isset($about) {{ $about->status ? "selected=true" : "" }} @endisset>
+                            <option value="1"
+                                @isset($about) {{ $about->status ? 'selected=true' : '' }} @endisset>
                                 Inactive
                             </option>
                         </select>
+                        <p class="text-danger mt-2">{{ $errors->first('status') }}</p>
                     </div>
                     <div class="form-group">
                         <label for="exampleSelectGender">Serial No</label>
                         <input type="number" name="serial" value="{{ $about->serial }}" class="form-control"
                             id="serial" value="{{ $about->serial }}" placeholder="Enter a serial number">
+                        <p class="text-danger mt-2">{{ $errors->first('serial') }}</p>
                     </div>
                     <button type="submit" class="btn btn-primary mr-2">Submit</button>
                     <button class="btn btn-dark">Cancel</button>

@@ -38,8 +38,17 @@
                                     <td> {{ $order->product_qty }} {{ $order->product->salesUnit->name }} </td>
                                     <td> BDT.{{ $order->total_price }} </td>
                                     <td class="text-uppercase"> {{ $order->payment_method }} </td>
-                                    <td class="{{ $order->status == 'pending' ? 'text-danger' : 'text-success' }}">
-                                        {{ $order->status == 'pending' ? 'Pending' : 'Processing' }}
+                                    <td
+                                        class=" {{ $order->status == 'pending'
+                                            ? 'text-danger'
+                                            : ($order->status == 'processing'
+                                                ? 'text-warning'
+                                                : ($order->status == 'shipped'
+                                                    ? 'text-info'
+                                                    : ($order->status == 'delivered'
+                                                        ? 'text-success'
+                                                        : ''))) }}">
+                                        {{ ucfirst($order->status) }}
                                     </td>
                                     <td class="text-center">
                                         {{-- <a class="menu-icon" href="{{ route('orders.edit', $ourTeam->id) }}">
@@ -48,16 +57,11 @@
                                         <a class="menu-icon" href="{{ route('admin.orders.show', $order->id) }}">
                                             <i class="mdi mdi-eye"></i>
                                         </a>
-                                        {{-- <a class="menu-icon delete-row" href="{{ route('teams.destroy', $ourTeam->id) }}" data-confirm="Are you sure to delete this?">
-                                            <i class="mdi mdi-delete text-danger"></i>
-                                        </a> --}}
-                                        {{-- <button type="button" class="btn btn-primary" data-toggle="modal"
-                                            data-target="#updateStatusModal{{ $order->id }}">
-                                            Update Status
-                                        </button> --}}
-                                        <button type="button" class="btn btn-primary" data-toggle="modal"
+                                        <button type="button" class="btn" data-toggle="modal"
                                             data-target="#myModal{{ $order->id }}">
-                                            Open Modal
+                                            <a class="" href="#">
+                                                <i class="mdi mdi-eye"></i>
+                                            </a>
                                         </button>
                                     </td>
                                 </tr>
@@ -152,8 +156,9 @@
                                     <td> Henry Tom </td>
                                     <td>
                                         <div class="progress">
-                                            <div class="progress-bar bg-warning" role="progressbar" style="width: 20%"
-                                                aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
+                                            <div class="progress-bar bg-warning" role="progressbar"
+                                                style="width: 20%" aria-valuenow="20" aria-valuemin="0"
+                                                aria-valuemax="100"></div>
                                         </div>
                                     </td>
                                     <td> $ 150.00 </td>
@@ -172,86 +177,38 @@
             </div>
         </div>
     </div>
-
-    {{-- Status update modal --}}
-    {{-- <div class="modal fade" id="updateStatusModal{{ $order->id }}" tabindex="-1" role="dialog"
-        aria-labelledby="updateStatusModalLabel{{ $order->id }}" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="updateStatusModalLabel{{ $order->id }}">Update Status</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <form action="{{ route('update.order.status', $order->id) }}" method="POST">
-                    @csrf
-                    @method('PUT')
-                    <div class="modal-body">
-                        <div class="form-group">
-                            <label for="status">New Status:</label>
-                            <select name="status" id="status" class="form-control">
-                                @foreach ($statuses as $status)
-                                    <option value="{{ $status }}"
-                                        {{ $order->status == $status ? 'selected' : '' }}>{{ ucfirst($status) }}
-                                    </option>
-                                @endforeach
-                            </select>
+    @if (!empty($order))
+        <div class="modal fade" id="myModal{{ $order->id }}" aria-labelledby="myModalLabel{{ $order->id }}"
+            aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <form action="{{ route('update.order.status', $order->id) }}" method="POST">
+                        <div class="modal-header">
+                            <h4 class="modal-title" id="myModalLabel{{ $order->id }}">Update status</h4>
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
                         </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary">Update Status</button>
-                    </div>
+                        @csrf
+                        @method('PUT')
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <label for="status">New Status:</label>
+                                <select name="status" id="status" class="form-control">
+                                    @foreach ($statuses as $status)
+                                        <option value="{{ $status }}"
+                                            {{ $order->status == $status ? 'selected' : '' }}>{{ ucfirst($status) }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary">Update Status</button>
+                        </div>
+                </div>
                 </form>
             </div>
         </div>
-    </div> --}}
+    @endif
 
-    {{-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
-        Open Modal
-    </button> --}}
-
-    <div class="modal fade" id="myModal{{ $order->id }}" aria-labelledby="myModalLabel{{ $order->id }}" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title" id="myModalLabel{{ $order->id }}">Update status</h4>
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                </div>
-                <form action="{{ route('update.order.status', $order->id) }}" method="POST">
-                    @csrf
-                    @method('PUT')
-                    <div class="modal-body">
-                        <div class="form-group">
-                            <label for="status">New Status:</label>
-                            <select name="status" id="status" class="form-control">
-                                @foreach ($statuses as $status)
-                                    <option value="{{ $status }}"
-                                        {{ $order->status == $status ? 'selected' : '' }}>{{ ucfirst($status) }}
-                                    </option>
-                                @endforeach
-                            </select>
-                        </div>
-                    </div>
-                </form>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary">Update Status</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    {{-- @push('styles')
-        <!-- Bootstrap CSS -->
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    @endpush
-
-    @push('scripts')
-        <!-- jQuery -->
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-        <!-- Bootstrap JavaScript -->
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    @endpush --}}
 </x-app-layout>

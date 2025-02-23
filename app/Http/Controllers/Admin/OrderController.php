@@ -19,6 +19,7 @@ class OrderController extends Controller
     {
         $data['orders'] = Order::with('product.salesUnit:id,name')->get();
         $data['statuses'] = ['pending', 'processing', 'shipped', 'delivered'];
+
         return view('admin.orders.index', $data);
     }
 
@@ -80,7 +81,7 @@ class OrderController extends Controller
             'product.category:id,name',
             'product.purchaseUnit:id,name',
         ]);
-        
+
         return view('admin.orders.show', $data);
     }
 
@@ -90,11 +91,21 @@ class OrderController extends Controller
             'status' => 'required|in:pending,processing,shipped,delivered',
         ]);
 
+        if ($order->status === $validatedData['status']) {
+            Alert::error('Error', 'The order status is already set to this value.');
+            return redirect()->back();
+        }
+
+        if ($order->status === 'delivered' && $validatedData['status'] !== 'delivered') {
+            Alert::error('Error', 'Delivered orders cannot be changed to another status.');
+            return redirect()->back();
+        }
+
         $order->status = $validatedData['status'];
         $order->save();
 
         Alert::success('Success', 'Your order placed Successfully.');
-            return redirect()->route('home');
+            return redirect()->back();
     }
 
     public function edit(Order $order)

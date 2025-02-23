@@ -26,4 +26,9 @@ class Brand extends Model
             asset((config('commonconfig.default_image_path').'default.png'))
         );
     }
+
+    public function products()
+    {
+        return $this->hasMany(Product::class);
+    }
 }
