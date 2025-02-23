@@ -86,4 +86,15 @@ class StoreProductRequest extends FormRequest
             ],
         ];
     }
+
+    public function messages()
+    {
+        return [
+            'category_id' => __('The category name field is required'),
+            'brand_id' => __('The brand name field is required'),
+            'unit_id' => __('The unit name field is required'),
+            'purchase_unit_id' => __('The purchase unit name field is required'),
+            'sale_unit_id' => __('The sale unit name field is required'),
+        ];
+    }
 }

@@ -38,11 +38,6 @@ class AboutVgearController extends Controller
         }
         Alert::success('Success', 'About Vgear Created Successfully.');
         return redirect()->route('us.index');
-
-        // if (!empty($about)) {
-        //     return redirect()->route('us.index')->with('SUCCESS', 'About Vgear Created');
-        // }
-        // return redirect()->back()->withInput()->with('ERROR', 'Something Wrong!');
     }
 
     public function show(AboutVgear $us)
@@ -61,11 +56,6 @@ class AboutVgearController extends Controller
     public function update(UpdateAboutVgearRequest $request, AboutVgear $us)
     {
         $data = $request->validated();
-
-        // if (!empty($us->update($data))) {
-        //     return redirect()->route('us.index')->with('SUCCESS', 'About Vgears Updated');
-        // }
-        // return redirect()->back()->withInput()->with('ERROR', 'Something Wrong!');
 
         if (empty($us->update($data))) {
             Alert::error('Error', 'Something wrong!');

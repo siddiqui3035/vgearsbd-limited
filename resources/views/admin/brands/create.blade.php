@@ -14,10 +14,12 @@
                     <div class="form-group">
                         <label for="exampleInputEmail3">Brand Name</label>
                         <input type="text" name="name" class="form-control" id="name" placeholder="Enter a brand name">
+                        <p class="text-danger mt-2">{{ $errors->first('name') }}</p>
                     </div>
                     <label>Image upload</label>
                     <div class="form-group">
                         <input type="file" name="image" id="image">
+                        <p class="text-danger mt-2">{{ $errors->first('image') }}</p>
                     </div>
                     <button type="submit" class="btn btn-primary mr-2">Submit</button>
                     <a href="{{ route('brands.index') }}" class="btn btn-dark">Cancel</a>

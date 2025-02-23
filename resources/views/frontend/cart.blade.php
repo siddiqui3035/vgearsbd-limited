@@ -71,7 +71,6 @@
                                                 <div class="d-none">
                                                     {{ $price += $cart->product->sale_price * $cart->product_qty }}
                                                 </div>
-                                                {{-- @dump($price) --}}
                                             </td>
                                         </tr>
                                     @empty

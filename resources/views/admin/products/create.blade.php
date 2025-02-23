@@ -6,7 +6,6 @@
                     <h4 class="card-title">Create Product</h4>
                     <a class="menu-icon" href="{{ route('products.index') }}">
                         <i class="mdi mdi-format-list-bulleted"><span>Back to list</span></i>
-
                     </a>
                 </div>
                 <form class="forms-sample" action="{{ route('products.store') }}" method="post"
@@ -21,6 +20,7 @@
                                 </option>
                             @endforeach
                         </select>
+                        <p class="text-danger mt-2">{{ $errors->first('brand_id') }}</p>
                     </div>
                     <div class="form-group">
                         <label for="exampleSelectGender">Category</label>
@@ -31,21 +31,25 @@
                                 </option>
                             @endforeach
                         </select>
+                        <p class="text-danger mt-2">{{ $errors->first('category_id') }}</p>
                     </div>
                     <div class="form-group">
                         <label for="exampleSelectGender">Product Name</label>
                         <input type="text" name="name" class="form-control" id="name"
                             placeholder="Enter a product name">
+                            <p class="text-danger mt-2">{{ $errors->first('name') }}</p>
                     </div>
                     <div class="form-group">
                         <label for="exampleSelectGender">Product Code</label>
                         <input type="number" name="product_code" class="form-control" id="product_code"
                             placeholder="Enter a product code">
+                            <p class="text-danger mt-2">{{ $errors->first('product_code') }}</p>
                     </div>
                     <div class="form-group">
                         <label for="exampleSelectGender">Product Quantity</label>
                         <input type="number" name="qty" class="form-control" id="qty"
                             placeholder="Enter a product quantity">
+                            <p class="text-danger mt-2">{{ $errors->first('qty') }}</p>
                     </div>
                     <div class="form-group">
                         <label for="exampleSelectGender">Product Unit</label>
@@ -56,16 +60,19 @@
                                 </option>
                             @endforeach
                         </select>
+                        <p class="text-danger mt-2">{{ $errors->first('unit_id') }}</p>
                     </div>
                     <div class="form-group">
                         <label for="exampleSelectGender">Purchase Unit</label>
                         <select id="purchase-units" class="form-control" name="purchase_unit_id">
                         </select>
+                        <p class="text-danger mt-2">{{ $errors->first('purchase_unit_id') }}</p>
                     </div>
                     <div class="form-group">
                         <label for="exampleSelectGender">Sale Unit</label>
                         <select id="sale-units" class="form-control" name="sale_unit_id">
                         </select>
+                        <p class="text-danger mt-2">{{ $errors->first('sale_unit_id') }}</p>
                     </div>
                     <div class="form-group">
                         <label for="exampleSelectGender">Packaging Type</label>
@@ -84,30 +91,36 @@
                                 Others
                             </option>
                         </select>
+                        <p class="text-danger mt-2">{{ $errors->first('packaging_type') }}</p>
                     </div>
                     <div class="form-group">
                         <label for="exampleSelectGender">Product Purchase Price</label>
                         <input type="number" name="purchase_price" class="form-control" id="purchase_price"
                             placeholder="Enter a product purchase">
+                            <p class="text-danger mt-2">{{ $errors->first('purchase_price') }}</p>
                     </div>
                     <div class="form-group">
                         <label for="exampleSelectGender">Product Sale Price</label>
                         <input type="number" name="sale_price" class="form-control" id="sale_price"
                             placeholder="Enter a product purchase">
+                            <p class="text-danger mt-2">{{ $errors->first('sale_price') }}</p>
                     </div>
                     <div class="form-group">
                         <label for="exampleSelectGender">Product Details</label>
                         <textarea class="form-control" name="details" id="details" cols="30" rows="10"></textarea>
+                        <p class="text-danger mt-2">{{ $errors->first('details') }}</p>
                     </div>
                     <label>Product Thumble upload</label>
                     <div class="form-group">
                         <input type="file" name="thumble" id="thumble">
+                        <p class="text-danger mt-2">{{ $errors->first('thumble') }}</p>
                         <div class="d-flex align-content-between" ></div>
                     </div>
                     <label>Product Image upload</label>
                     <div class="form-group">
                         <input type="file" name="images[]" id="images" multiple>
                         <div id="image-holder" class="d-flex align-content-between mt-4" ></div>
+                        <p class="text-danger mt-2">{{ $errors->first('images') }}</p>
                     </div>
                     <button type="submit" class="btn btn-primary mr-2">Submit</button>
                     <a href="{{ route('products.index') }}" class="btn btn-dark">Cancel</a>

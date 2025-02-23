@@ -70,20 +70,12 @@
                 <div class="col-lg-4 col-md-12 col-sm-7">
                     <div class="widgets_container contact_us">
                         <div class="footer_logo">
-                            {{-- <div class="earth"></div> --}}
-                            {{-- <a href="index.html">
-                                <img src="{{ asset('front-asset/assets/img/logo/vlogo.png') }}" style="height: 150px;" alt="">
-                            </a> --}}
                             <div class="d-flex align-items-center justify-between">
-                                <img src="{{ asset('front-asset/assets/img/logo/vlogo.png') }}" style="height: 150px;" alt="">
+                                <img src="{{ asset('front-asset/assets/img/logo/vlogo.png') }}" style="height: 150px;"
+                                    alt="">
                                 <p class="text-danger font-weight-bold">LIMITED</p>
                             </div>
                         </div>
-                        {{-- <p class="footer_desc">We are a team of designers and developers that create high quality
-                            eCommerce, WordPress, Shopify .</p>
-                        <p><span>Address:</span> 4710-4890 Breckinridge USA</p>
-                        <p><span>Email:</span> <a href="#">demo@hasthemes.com</a></p>
-                        <p><span>Call us:</span> <a href="tel:(08)23456789">(08) 23 456 789</a> </p> --}}
                     </div>
                 </div>
                 <div class="col-lg-2 col-md-3 col-sm-5">
@@ -111,8 +103,6 @@
                                 <li><a href="{{ route('blog.index') }}"> Blogs</a></li>
                                 <li><a href="#">Event</a></li>
                                 <li><a href="{{ route('products') }}">eStore</a></li>
-                                {{-- <li><a href="#">Returns</a></li> --}}
-                                {{-- <li><a href="#"> Order History</a></li> --}}
                             </ul>
                         </div>
                     </div>
@@ -122,12 +112,13 @@
                         <h3>Sign up newsletter</h3>
                         <p class="footer_desc">Get updates by subscribe our weekly newsletter</p>
                         <div class="subscribe_form">
-                            <form action="{{ route('subscribe.store') }}" method="post" class="mc-form footer-newsletter">
+                            <form action="{{ route('subscribe.store') }}" method="post"
+                                class="mc-form footer-newsletter">
                                 @csrf
-                                <input name="email" type="email" autocomplete="off"
-                                    placeholder="Enter you email" />
+                                <input name="email" type="email" autocomplete="off" placeholder="Enter you email" />
                                 <button type="submit">Subscribe</button>
                             </form>
+                            <p class="text-danger mt-2">{{ $errors->first('email') }}</p>
                             <!-- mailchimp-alerts Start -->
                             <div class="mailchimp-alerts text-centre">
                                 <div class="mailchimp-submitting"></div><!-- mailchimp-submitting end -->
@@ -146,8 +137,8 @@
             <div class="row align-items-center">
                 <div class="col-lg-6 col-md-7">
                     <div class="copyright_area">
-                        <p>Copyright © {{ now()->year }} <a href="http://www.vgearsbd.com/">VGEARSBD</a> . All Rights Reserved.Design by <a
-                                href="http://www.coderszonebd.com">Coder's Zone</a></p>
+                        <p>Copyright © {{ now()->year }} <a href="http://www.vgearsbd.com/">VGEARSBD</a> . All Rights
+                            Reserved.Design by <a href="http://www.coderszonebd.com">Coder's Zone</a></p>
                     </div>
                 </div>
                 <div class="col-lg-6 col-md-5">
@@ -168,4 +159,3 @@
         </div>
     </div>
 </footer>
-

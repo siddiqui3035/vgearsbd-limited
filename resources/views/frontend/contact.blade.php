@@ -55,21 +55,24 @@
                             <p>
                                 <label> Your Name <label class="text-danger">*</label></label>
                                 <input name="name" placeholder="Enter your fullname" type="text">
+                                <p class="text-danger mt-2">{{ $errors->first('name') }}</p>
                             </p>
                             <p>
                                 <label> Your Email <label class="text-danger">*</label></label>
                                 <input name="email" placeholder="Enter your email" type="email">
+                                <p class="text-danger mt-2">{{ $errors->first('email') }}</p>
                             </p>
                             <p>
                                 <label> Subject <label class="text-danger">*</label></label>
                                 <input name="subject" placeholder="Enter a subject" type="text">
+                                <p class="text-danger mt-2">{{ $errors->first('subject') }}</p>
                             </p>
                             <div class="contact_textarea">
                                 <label> Your Message <label class="text-danger">*</label></label>
                                 <textarea placeholder="Enter your message" name="message" class="form-control2"></textarea>
+                                <p class="text-danger mt-2">{{ $errors->first('message') }}</p>
                             </div>
                             <button type="submit"> Send</button>
-                            {{-- <p class="form-messege"></p> --}}
                         </form>
 
                     </div>

@@ -46,8 +46,10 @@
                                         @method('PUT')
                                         <label>Social type</label>
                                         <input type="text" name="type" value="{{ $sociallink->type }}">
+                                        <p class="text-danger mt-2">{{ $errors->first('type') }}</p>
                                         <label>Social link</label>
                                         <input type="text" name="link" value="{{ $sociallink->link }}">
+                                        <p class="text-danger mt-2">{{ $errors->first('link') }}</p>
                                         <div class="save_button primary_btn default_button">
                                             <button type="submit">Save</button>
                                         </div>

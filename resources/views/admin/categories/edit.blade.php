@@ -24,11 +24,13 @@
                                 </option>
                             @endforeach
                         </select>
+                        <p class="text-danger mt-2">{{ $errors->first('parent_id') }}</p>
                     </div>
                     <div class="form-group">
                         <label for="exampleSelectGender">Name</label>
                         <input type="text" name="name" value="{{ $category->name }}" class="form-control"
                             id="short_name" placeholder="Enter a category name">
+                            <p class="text-danger mt-2">{{ $errors->first('name') }}</p>
                     </div>
                     <div class="form-group">
                         <label for="exampleSelectGender">Status</label>
@@ -42,6 +44,7 @@
                                 Inactive
                             </option>
                         </select>
+                        <p class="text-danger mt-2">{{ $errors->first('status') }}</p>
                     </div>
                     <button type="submit" class="btn btn-primary mr-2">Submit</button>
                     <a href="{{ route('categories.index') }}" class="btn btn-dark">Cancel</a>

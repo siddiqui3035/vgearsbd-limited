@@ -89,6 +89,11 @@ class CategoryController extends Controller
 
     public function destroy(Category $category)
     {
+        if ($category->products()->exists() || $category->otherRelatedModels()->exists()) {
+            Alert::error('Error', 'Category is in use and cannot be deleted.');
+            return redirect()->back();
+        }
+        
         if($category->delete()){
             Alert::success('Success', 'Product category deleted successfully.');
             return redirect()->back();

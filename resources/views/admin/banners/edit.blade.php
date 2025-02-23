@@ -39,6 +39,7 @@
                                 Inactive
                             </option>
                         </select>
+                        <p class="text-danger mt-2">{{ $errors->first('status') }}</p>
                     </div>
                     <label>Image upload</label>
                     <div class="form-group">

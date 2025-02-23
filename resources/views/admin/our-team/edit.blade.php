@@ -6,7 +6,6 @@
                     <h4 class="card-title">Edit Member's</h4>
                     <a class="menu-icon" href="{{ route('teams.index') }}">
                         <i class="mdi mdi-format-list-bulleted"><span>Back to list</span></i>
-
                     </a>
                 </div>
                 <form class="forms-sample" action="{{ route('teams.update', $team->id) }}" method="post"
@@ -17,17 +16,20 @@
                         <label for="exampleInputName1">Name</label>
                         <input type="text" name="name" value="{{ $team->name }}" class="form-control"
                             id="name" placeholder="Enter member name">
+                            <p class="text-danger mt-2">{{ $errors->first('name') }}</p>
                     </div>
                     <div class="form-group">
                         <label for="exampleInputEmail3">Degnigation</label>
                         <input type="text" name="degnigation" value="{{ $team->degnigation }}" class="form-control"
                             id="degnigation" placeholder="Enter member degnigation">
+                            <p class="text-danger mt-2">{{ $errors->first('degnigation') }}</p>
                     </div>
                     <div class="form-group">
                         <label for="exampleTextarea1">Details</label>
                         <textarea class="form-control" name="details" id="details" rows="4">
                             {{ $team->details }}
                         </textarea>
+                        <p class="text-danger mt-2">{{ $errors->first('details') }}</p>
                     </div>
                     <div class="form-group">
                         <label for="exampleSelectGender">Status</label>
@@ -41,11 +43,13 @@
                                 Inactive
                             </option>
                         </select>
+                        <p class="text-danger mt-2">{{ $errors->first('status') }}</p>
                     </div>
                     <label>Image upload</label>
                     <div class="form-group">
                         <div class="mb-3">
                             <input type="file" name="image" id="image">
+                            <p class="text-danger mt-2">{{ $errors->first('image') }}</p>
                         </div>
 
                         <img src="{{ asset($team->image) }}" alt="" width="60px">

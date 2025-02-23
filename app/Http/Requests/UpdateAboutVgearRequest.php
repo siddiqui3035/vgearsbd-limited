@@ -29,7 +29,7 @@ class UpdateAboutVgearRequest extends FormRequest
                 'required'
             ],
             'details' => [
-                'required'
+                'nullable'
             ],
             'status' => [
                 'required',

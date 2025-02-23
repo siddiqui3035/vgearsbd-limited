@@ -16,6 +16,7 @@
                         <label for="exampleInputName1">Name</label>
                         <input type="text" name="name" value="{{ $brand->name }}" class="form-control"
                             id="title_one" placeholder="Enter a brand name">
+                            <p class="text-danger mt-2">{{ $errors->first('name') }}</p>
                     </div>
                     <div class="form-group">
                         <label for="exampleSelectGender">Status</label>
@@ -29,11 +30,13 @@
                                 Inactive
                             </option>
                         </select>
+                        <p class="text-danger mt-2">{{ $errors->first('status') }}</p>
                     </div>
                     <label>Image upload</label>
                     <div class="form-group">
                         <div class="mb-3">
                             <input type="file" name="image" id="image">
+                            <p class="text-danger mt-2">{{ $errors->first('image') }}</p>
                         </div>
                         <img src="{{ asset($brand->image) }}" alt="" width="60px">
                     </div>

@@ -14,11 +14,13 @@
                     <div class="form-group">
                         <label for="exampleInputName1">Discount Type</label>
                         <input type="text" name="type" class="form-control" id="type" placeholder="Enter a discount type">
+                        <p class="text-danger mt-2">{{ $errors->first('type') }}</p>
                     </div>
                     <div class="form-group">
                         <label for="exampleSelectGender">Discount Amount</label>
                         <input type="text" name="amount" class="form-control"
                             id="amount" placeholder="Enter a discount amount">
+                            <p class="text-danger mt-2">{{ $errors->first('amount') }}</p>
                     </div>
                     <button type="submit" class="btn btn-primary mr-2">Submit</button>
                     <a href="{{ route('discounts.index') }}" class="btn btn-dark">Cancel</a>
